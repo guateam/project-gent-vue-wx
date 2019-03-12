@@ -1,4 +1,4 @@
-const baseUrl = 'https://hanerx.tk:5000/api';
+const baseUrl = 'https://lgt1212.cn:4000/api';
 
 const base = {
     homepage: baseUrl + '/homepage',
