@@ -162,6 +162,8 @@
                     addData(myDB.db, "user", data);
                 }, 1000);
             }
+        },
+        mounted() {
         }
     }
 </script>

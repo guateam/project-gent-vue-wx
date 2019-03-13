@@ -176,6 +176,7 @@
             this.busy = false;
         },
         mounted() {
+            this.$store.commit('updateToken', this.$route.query.token);
             this.get_category();
             // setTimeout(this.get_recommend(), 5000);
         },
