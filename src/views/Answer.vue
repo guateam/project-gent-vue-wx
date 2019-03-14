@@ -23,7 +23,6 @@
         <!--分隔线-->
         <div style="width: 100%;height: 12px;background-color: #EBEBEB;"></div>
 
-        <!--回答者的用户信息关注等，这部分dom写的太复杂了所以先直接把style全写在template里面-->
 
         <div>
             <div style="display: flex;justify-content: space-between;margin-top: 1em;margin-bottom: 1em">
@@ -31,7 +30,7 @@
                      @click="$router.push({name: 'detail', query: {redirect: $route.fullPath, id: user_id}})">
                     <div style="display: flex;flex: 0 0 25%;align-items: center;justify-content: center">
                         <div style="width: 60px;height: 60px;border-radius: 50%">
-                            <img :src="avatar" alt="" style="width: 100%;height: 100%;border-radius: 50%">
+                            <img :src="avatar" alt="" style="width: 100%;height: 100%;border-radius: 50%;object-fit: cover">
                         </div>
                     </div>
                     <div style="display: flex;flex-direction: column;justify-content: space-between;">
@@ -65,9 +64,8 @@
             <p v-html="intro.replace(/\n/g, '<br>')"></p>
         </div>
 
-        <!--评论这部分,是有组件的，但是这里不用，仅获取前三个类似热评一样的东西，不然样式不好写-->
         <div style="width: 100%">
-            <ButtonGroup style="width: 100%;height: 6em;margin-top: 2em">
+            <ButtonGroup style="width: 100%;height: 6em;margin-top: 1em">
                 <Button type="warning" icon="md-arrow-dropup" :class="{mid:select===0,long:select===1,hide:select===2}"
                         @click="agree_answer()" :hidden="select===2">{{select!==0?'已':''}}点赞 {{agree}}
                 </Button>
@@ -152,7 +150,7 @@
                 desc: '杭州光学专家',
                 latestEdit: '19:00',
                 warning: ['原创', '不可转载'],
-                avatar: './head.png',
+                avatar: 'https://www.asgardusk.com/images/none.png',
                 comments: [
                     {
                         agree: 1,

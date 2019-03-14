@@ -15,7 +15,7 @@
             <div class="box" style="height: 6em" @click="head_dialog=true">
                 <div>头像</div>
                 <div style="width: 5em;height: 5em;overflow: hidden;border-radius: 50%;">
-                    <img :src="head_portrait" alt="img" style="width: 100%;height: 100%;border-radius: 50%">
+                    <img :src="head_portrait" alt="img" style="width: 100%;height: 100%;border-radius: 50%;object-fit: cover">
                 </div>
             </div>
             <v-divider></v-divider>
