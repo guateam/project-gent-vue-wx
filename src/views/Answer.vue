@@ -68,10 +68,12 @@
         <!--评论这部分,是有组件的，但是这里不用，仅获取前三个类似热评一样的东西，不然样式不好写-->
         <div style="width: 100%">
             <ButtonGroup style="width: 100%;height: 6em;margin-top: 2em">
-                <Button type="warning" icon="md-arrow-dropup" :class="{mid:select===0,long:select===1,hide:select===2}"
+                <Button type="warning" icon="md-arrow-dropup"
+                        :class="{mid:select===0,long:select===1,hide:select===2,display:hidden1}"
                         @click="agree_answer()" :hidden="select===2">{{select!==0?'已':''}}点赞 {{agree}}
                 </Button>
-                <Button icon="md-arrow-dropdown" :class="{mid:select===0,long:select===2,hide:select===1}"
+                <Button icon="md-arrow-dropdown"
+                        :class="{mid2:select===0,long:select===2,hide2:select===1,display:hidden2}"
                         @click="disagree_answer()" :hidden="select===1">{{select!==0?'已':''}}点踩 {{disagree}}
                 </Button>
             </ButtonGroup>
@@ -447,6 +449,18 @@
     }
 
     .mid {
+        position: absolute;
+        left: 0;
+        width: 50%;
+        transition: all 0.5s;
+        /*animation: back_ 2s;*/
+        /*-moz-animation: back_ 2s; !* Firefox *!*/
+        /*-webkit-animation: back_ 2s; !* Safari 和 Chrome *!*/
+        /*-o-animation: back_ 2s; !* Opera *!*/
+    }
+    .mid2 {
+        position: absolute;
+        left: 50%;
         width: 50%;
         transition: all 0.5s;
         /*animation: back_ 2s;*/
@@ -456,6 +470,8 @@
     }
 
     .long {
+        position: absolute;
+        left: 0;
         width: 100%;
         transition: all 0.5s;
         /*animation: big 2s;*/
@@ -465,9 +481,24 @@
     }
 
     .hide {
+        position: absolute;
         width: 0;
         /*display: none;*/
         opacity: 0;
+        right: 100%;
+        visibility: hidden;
+        transition: all 0.5s;
+        /*animation: small_ 0.5s;*/
+        /*-moz-animation: small_ 0.5s; !* Firefox *!*/
+        /*-webkit-animation: small_ 0.5s; !* Safari 和 Chrome *!*/
+        /*-o-animation: small_ 0.5s; !* Opera *!*/
+    }
+    .hide2 {
+        position: absolute;
+        width: 0;
+        /*display: none;*/
+        opacity: 0;
+        left: 100%;
         visibility: hidden;
         transition: all 0.5s;
         /*animation: small_ 0.5s;*/
