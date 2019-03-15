@@ -23,7 +23,6 @@
         <!--分隔线-->
         <div style="width: 100%;height: 12px;background-color: #EBEBEB;"></div>
 
-        <!--回答者的用户信息关注等，这部分dom写的太复杂了所以先直接把style全写在template里面-->
 
         <div>
             <div style="display: flex;justify-content: space-between;margin-top: 1em;margin-bottom: 1em">
@@ -31,7 +30,8 @@
                      @click="$router.push({name: 'detail', query: {redirect: $route.fullPath, id: user_id}})">
                     <div style="display: flex;flex: 0 0 25%;align-items: center;justify-content: center">
                         <div style="width: 60px;height: 60px;border-radius: 50%">
-                            <img :src="avatar" alt="" style="width: 100%;height: 100%;border-radius: 50%">
+                            <img :src="avatar" alt=""
+                                 style="width: 100%;height: 100%;border-radius: 50%;object-fit: cover">
                         </div>
                     </div>
                     <div style="display: flex;flex-direction: column;justify-content: space-between;">
@@ -132,6 +132,7 @@
         name: "Answer",
         data() {
             return {
+                agreethis: 0,
                 topicTitle: '刚刚研制成功的世界首台分辨力最高紫外超分辨光刻装备意味着什么？对国内芯片行业有何影响？',  // 话题标题
                 intro: '先回答大家最关心的两个问题：\n' +
                     '1、我们可以实现芯片彻底国产化了吗？\n' +
@@ -154,7 +155,7 @@
                 desc: '杭州光学专家',
                 latestEdit: '19:00',
                 warning: ['原创', '不可转载'],
-                avatar: './head.png',
+                avatar: 'https://www.asgardusk.com/images/none.png',
                 comments: [
                     {
                         agree: 1,
@@ -268,38 +269,40 @@
                 })
             },
             agree_answer() {
-                if (this.select === 1) {
-                    this.$api.answer.un_agree_answer(this.$route.query.id).then(res => {
-                        if (res.data.code === 1) {
-                            this.select = 0;
-                            this.agree--;
-                        }
-                    })
-                } else {
-                    this.$api.answer.agree_answer(this.$route.query.id).then(res => {
-                        if (res.data.code === 1) {
-                            this.select = 1;
-                            this.agree++;
-                        }
-                    })
-                }
+                // if (this.select === 1) {
+                //     this.$api.answer.un_agree_answer(this.$route.query.id).then(res => {
+                //         if (res.data.code === 1) {
+                //             this.select = 0;
+                //             this.agree--;
+                //         }
+                //     })
+                // } else {
+                //     this.$api.answer.agree_answer(this.$route.query.id).then(res => {
+                //         if (res.data.code === 1) {
+                //             this.select = 1;
+                //             this.agree++;
+                //         }
+                //     })
+                // }
+                this.agreethis=1
             },
             disagree_answer() {
-                if (this.select === 2) {
-                    this.$api.answer.un_disagree_answer(this.$route.query.id).then(res => {
-                        if (res.data.code === 1) {
-                            this.select = 0;
-                            this.disagree--;
-                        }
-                    })
-                } else {
-                    this.$api.answer.disagree_answer(this.$route.query.id).then(res => {
-                        if (res.data.code === 1) {
-                            this.select = 2;
-                            this.disagree++;
-                        }
-                    })
-                }
+                // if (this.select === 2) {
+                //     this.$api.answer.un_disagree_answer(this.$route.query.id).then(res => {
+                //         if (res.data.code === 1) {
+                //             this.select = 0;
+                //             this.disagree--;
+                //         }
+                //     })
+                // } else {
+                //     this.$api.answer.disagree_answer(this.$route.query.id).then(res => {
+                //         if (res.data.code === 1) {
+                //             this.select = 2;
+                //             this.disagree++;
+                //         }
+                //     })
+                // }
+                this.agreethis=2
             },
             get_answer_agree_state() {
                 this.$api.answer.get_answer_agree_state(this.$route.query.id).then(res => {
@@ -543,6 +546,18 @@
         align-items: center;
         justify-content: center;
         border-radius: 5px;
+    }
+
+    .agree {
+        color: #ffcc00
+    }
+
+    .no {
+        color: rgba(0, 0, 0, .54);
+    }
+
+    .disagree {
+        color: #ffcc00
     }
 </style>
 <style>

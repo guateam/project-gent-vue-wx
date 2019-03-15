@@ -7,9 +7,9 @@
                 <span>{{ title }}</span>
             </v-toolbar-title>
 
-            <v-btn :to="{name: 'settings', query: {redirect: this.$route.fullPath}}" icon>
-                <v-icon>settings</v-icon>
-            </v-btn>
+            <!--<v-btn :to="{name: 'settings', query: {redirect: this.$route.fullPath}}" icon>-->
+                <!--<v-icon>settings</v-icon>-->
+            <!--</v-btn>-->
         </v-toolbar>
         <v-card color="primary" flat>
             <v-container>
@@ -18,7 +18,7 @@
                         <v-layout align-center>
                             <v-flex shrink>
                                 <v-avatar id="avatar" size="70" @click="$router.push({name:'detail',query:{id:$store.state.userInfo.user_id}})">
-                                    <img :src="$store.state.userInfo.head_portrait" alt="">
+                                    <img :src="$store.state.userInfo.head_portrait" alt="" style="object-fit: cover">
                                 </v-avatar>
                             </v-flex><!--头像-->
 

@@ -4,7 +4,7 @@
             <v-layout justify-space-between align-start>
                 <v-flex shrink>
                     <v-avatar id="avatar" size="80">
-                        <img @click="$router.push({name: 'account'})" :src="$store.state.userInfo.head_portrait" alt="">
+                        <img @click="$router.push({name: 'account'})" :src="$store.state.userInfo.head_portrait" alt="" style="object-fit: cover">
                     </v-avatar><!--头像-->
                 </v-flex>
                 <v-flex shrink>
