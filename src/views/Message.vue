@@ -5,31 +5,18 @@
             <v-toolbar-side-icon @click="$store.commit('drawer')"></v-toolbar-side-icon>
 
             <v-toolbar-title class="headline" style="margin: 0 auto">
-                <span>消息</span>
+                <span>消息通知</span>
             </v-toolbar-title>
 
             <v-btn icon @click="$router.push({name:'search'})">
                 <v-icon>search</v-icon>
             </v-btn>
-
-            <v-tabs slot="extension" v-model="tabs" centered color="primary" slider-color="secondary">
-                <v-tab v-for="(tab, tab_idx) in tabList" :key="tab_idx">{{ tab }}</v-tab>
-            </v-tabs>
         </v-toolbar>
 
         <v-card>
             <v-tabs-items v-model="tabs">
-                <v-tab-item :key="0">
-                    <message-list :list="msgList"></message-list>
-                </v-tab-item>
-                <v-tab-item :key="1">
-                    <FriendList :list="friList"></FriendList>
-                </v-tab-item>
                 <v-tab-item :key="2">
                     <Notice :list1="noticeList1"></Notice>
-                </v-tab-item>
-                <v-tab-item :key="3">
-                    <GroupList :list="groupList"></GroupList>
                 </v-tab-item>
             </v-tabs-items>
         </v-card>
@@ -38,19 +25,13 @@
 </template>
 
 <script>
-    import MessageList from "../components/MessageList"
-    import FriendList from "../components/FriendList"
     import Notice from "../components/Notice"
-    import GroupList from "../components/GroupList"
 
     export default {
         name: 'Message',
 
         components: {
-            MessageList,
-            FriendList,
             Notice,
-            GroupList
         },
 
         data() {

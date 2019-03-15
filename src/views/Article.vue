@@ -23,7 +23,7 @@
                     </div>
                     <div class="title_box_item" style="width: 100%;height: 25%;">
                         <h3>{{data.nickname}}</h3>
-                        <div style="margin-left: 5px;color:#66ccff; border: #66ccff 2px solid;padding: 1px 6px;border-radius: 25%">
+                        <div style="margin-left: 5px;color:#66ccff; border: #66ccff 2px solid;padding: 1px 6px;">
                             {{data.group.text}} lv.{{data.level}}
                         </div>
                     </div>

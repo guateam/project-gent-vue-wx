@@ -102,9 +102,9 @@
                 <!--</v-list-tile-action>-->
                 <!--<v-list-tile-title>个人中心</v-list-tile-title>-->
                 <!--</v-list-tile>-->
-            </v-list>
-            <v-divider></v-divider>
-            <v-list>
+            <!--</v-list>-->
+            <!--&lt;!&ndash;<v-divider></v-divider>&ndash;&gt;-->
+            <!--<v-list>-->
                 <v-list-tile @click="$router.push({name:'historical-post'})">
                     <v-list-tile-action>
                         <v-icon class="time--text">description</v-icon>
@@ -115,47 +115,47 @@
                         </v-layout>
                     </v-list-tile-title>
                 </v-list-tile>
-                <v-list-tile @click="$router.push({name:'article-publish'})">
-                    <v-list-tile-action>
-                        <v-icon class="time--text">border_color</v-icon>
-                    </v-list-tile-action>
-                    <v-list-tile-title>
-                        <v-layout justify-space-between>
-                            <span>发布文章</span>
-                        </v-layout>
-                    </v-list-tile-title>
-                </v-list-tile>
-                <v-list-tile @click="$router.push({name:'question-publish'})">
-                    <v-list-tile-action>
-                        <v-icon class="time--text">create_new_folder</v-icon>
-                    </v-list-tile-action>
-                    <v-list-tile-title>
-                        <v-layout justify-space-between>
-                            <span>发布话题</span>
-                        </v-layout>
-                    </v-list-tile-title>
-                </v-list-tile>
-                <v-list-tile @click="$router.push({name:'creation-manager'})">
-                    <v-list-tile-action>
-                        <v-icon class="time--text">insert_chart</v-icon>
-                    </v-list-tile-action>
-                    <v-list-tile-title>
-                        <v-layout justify-space-between>
-                            <span>创作中心</span>
-                        </v-layout>
-                    </v-list-tile-title>
-                </v-list-tile>
-                <v-list-tile @click="$router.push({name:'corporate_center'})"
-                             v-if="$store.state.userInfo.group.value===3 || $store.state.userInfo.group.value===0">
-                    <v-list-tile-action>
-                        <v-icon class="time--text">local_offer</v-icon>
-                    </v-list-tile-action>
-                    <v-list-tile-title>
-                        <v-layout justify-space-between>
-                            <span>企业中心</span>
-                        </v-layout>
-                    </v-list-tile-title>
-                </v-list-tile>
+                <!--<v-list-tile @click="$router.push({name:'article-publish'})">-->
+                    <!--<v-list-tile-action>-->
+                        <!--<v-icon class="time&#45;&#45;text">border_color</v-icon>-->
+                    <!--</v-list-tile-action>-->
+                    <!--<v-list-tile-title>-->
+                        <!--<v-layout justify-space-between>-->
+                            <!--<span>发布文章</span>-->
+                        <!--</v-layout>-->
+                    <!--</v-list-tile-title>-->
+                <!--</v-list-tile>-->
+                <!--<v-list-tile @click="$router.push({name:'question-publish'})">-->
+                    <!--<v-list-tile-action>-->
+                        <!--<v-icon class="time&#45;&#45;text">create_new_folder</v-icon>-->
+                    <!--</v-list-tile-action>-->
+                    <!--<v-list-tile-title>-->
+                        <!--<v-layout justify-space-between>-->
+                            <!--<span>发布话题</span>-->
+                        <!--</v-layout>-->
+                    <!--</v-list-tile-title>-->
+                <!--</v-list-tile>-->
+                <!--<v-list-tile @click="$router.push({name:'creation-manager'})">-->
+                    <!--<v-list-tile-action>-->
+                        <!--<v-icon class="time&#45;&#45;text">insert_chart</v-icon>-->
+                    <!--</v-list-tile-action>-->
+                    <!--<v-list-tile-title>-->
+                        <!--<v-layout justify-space-between>-->
+                            <!--<span>创作中心</span>-->
+                        <!--</v-layout>-->
+                    <!--</v-list-tile-title>-->
+                <!--</v-list-tile>-->
+                <!--<v-list-tile @click="$router.push({name:'corporate_center'})"-->
+                             <!--v-if="$store.state.userInfo.group.value===3 || $store.state.userInfo.group.value===0">-->
+                    <!--<v-list-tile-action>-->
+                        <!--<v-icon class="time&#45;&#45;text">local_offer</v-icon>-->
+                    <!--</v-list-tile-action>-->
+                    <!--<v-list-tile-title>-->
+                        <!--<v-layout justify-space-between>-->
+                            <!--<span>企业中心</span>-->
+                        <!--</v-layout>-->
+                    <!--</v-list-tile-title>-->
+                <!--</v-list-tile>-->
                 <v-list-tile :to="{name: 'exp-detail', query: {redirect: $route.fullPath}}">
                     <v-list-tile-action>
                         <v-icon class="time--text">trending_up</v-icon>
@@ -169,14 +169,14 @@
             </v-list>
             <v-divider></v-divider>
 
-            <v-list>
-                <v-list-tile :to="{name: 'settings', query: {redirect: this.$route.fullPath}}" @click="drawer = false">
-                    <v-list-tile-action>
-                        <v-icon>settings</v-icon>
-                    </v-list-tile-action>
-                    <v-list-tile-title>设置</v-list-tile-title>
-                </v-list-tile>
-            </v-list>
+            <!--<v-list>-->
+                <!--<v-list-tile :to="{name: 'settings', query: {redirect: this.$route.fullPath}}" @click="drawer = false">-->
+                    <!--<v-list-tile-action>-->
+                        <!--<v-icon>settings</v-icon>-->
+                    <!--</v-list-tile-action>-->
+                    <!--<v-list-tile-title>设置</v-list-tile-title>-->
+                <!--</v-list-tile>-->
+            <!--</v-list>-->
         </div><!--功能列表-->
     </div>
 </template>
