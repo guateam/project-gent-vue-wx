@@ -179,6 +179,7 @@ height: 100%;border-radius: 50%"
             get_answer_comment(id) {
                 this.$api.answer.get_answer_comment_list(id).then(res => {
                     if (res.data.code === 1) {
+                        this.data = [];
                         res.data.data.forEach(value => {
                             this.data.push({
                                 userID: value.user_id,
@@ -187,7 +188,8 @@ height: 100%;border-radius: 50%"
                                 createtime: value.create_time,
                                 agree: value.agree,
                                 level: value.level,
-                                usergroup: value.usergroup
+                                usergroup: value.usergroup,
+                                headportrait: value.user_headportrait
                             })
                         })
                     }

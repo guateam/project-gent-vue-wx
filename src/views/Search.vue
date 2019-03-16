@@ -32,6 +32,7 @@
                     class="elevation-0"
                     flat
                     dense
+                    @keyup.enter="done(search)"
             >
             <template v-slot:no-data>
                     <v-list-tile>

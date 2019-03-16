@@ -83,7 +83,26 @@
                     :options="editorOption">
             </quill-editor>
         </div>
-
+        <v-dialog
+                v-model="busy"
+                hide-overlay
+                persistent
+                width="300"
+        >
+            <v-card
+                    color="primary"
+                    dark
+            >
+                <v-card-text>
+                    正在发送···
+                    <v-progress-linear
+                            indeterminate
+                            color="white"
+                            class="mb-0"
+                    ></v-progress-linear>
+                </v-card-text>
+            </v-card>
+        </v-dialog>
     </div>
 </template>
 
@@ -152,7 +171,8 @@
                 rules: {
                     counter: value => value.length <= 30 || '字数不能超过30个',
                     required: value => !!value || '该栏不能为空.',
-                }
+                },
+                busy:false,
             }
         },
         methods: {
@@ -212,6 +232,7 @@
                 return back;
             },
             send() {
+                this.busy=true;
                 this.set_tags(this.formItem.first_category);
                 let that = this;
                 setTimeout(() => {
@@ -228,6 +249,7 @@
                     };
                     that.$api.enterprise.add_demand(data).then(res => {
                         if (res.data.code === 1) {
+                            this.busy=false;
                             that.$router.back();
                         } else {
                             this.$store.commit('showInfo', res.data.msg);

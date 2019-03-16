@@ -49,7 +49,26 @@
                     :options="editorOption">
             </quill-editor>
         </div>
-
+        <v-dialog
+                v-model="busy"
+                hide-overlay
+                persistent
+                width="300"
+        >
+            <v-card
+                    color="primary"
+                    dark
+            >
+                <v-card-text>
+                    正在发送···
+                    <v-progress-linear
+                            indeterminate
+                            color="white"
+                            class="mb-0"
+                    ></v-progress-linear>
+                </v-card-text>
+            </v-card>
+        </v-dialog>
     </div>
 </template>
 
@@ -101,11 +120,13 @@
                 dialog: false,
                 formItem: {
                     price: 0
-                }
+                },
+                busy:false,
             }
         },
         methods: {
             send() {
+                this.busy=true;
                 let data = {
                     token: this.$store.state.token,
                     content: this.content,
@@ -114,6 +135,7 @@
                 };
                 this.$api.specialist.add_order(data).then(res => {
                     if (res.data.code === 1) {
+                        this.busy=false;
                         this.$router.back()
                     } else {
                         this.$store.commit('showInfo', res.data.msg);

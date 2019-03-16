@@ -35,6 +35,7 @@
                     solo
                     flat
                     dense
+                    @keyup.enter="research()"
             >
                 <template v-slot:no-data>
                     <v-list-tile>
@@ -65,15 +66,19 @@
                     <!--这部分直接把topic的搬过来就好了，我懒的写静态数据了，对接的时候直接换一下吧-->
                     <question-card @click.native="view_detail(question.questionID)" v-for="(question,idx) in questions"
                                    :key="idx" v-bind="question"></question-card>
-                    
+
                     <div class="load-more-normal" v-infinite-scroll="loadMore"
-                        infinite-scroll-disabled="loading_A" infinite-scroll-distance="0" v-show="loading_A">
+                         infinite-scroll-disabled="loading_A" infinite-scroll-distance="0"
+                         v-show="loading_A&&no_A" v-if="questions.length>0">
                         <h3>
                             <v-progress-circular
                                     indeterminate
                                     color="primary"
                             ></v-progress-circular>
                             <span style="margin-left: 1em">加载中</span></h3>
+                    </div>
+                    <div v-if="questions.length===0" class="nothing">
+                        <h3>暂无内容</h3>
                     </div>
                 </v-tab-item>
 
@@ -108,13 +113,17 @@
                         </v-layout>
                     </v-container>
                     <div class="load-more-normal" v-infinite-scroll="loadMore"
-                        infinite-scroll-disabled="loading_B" infinite-scroll-distance="0" v-show="loading_B">
+                         infinite-scroll-disabled="loading_B" infinite-scroll-distance="0" v-show="loading_B&&no_B"
+                         v-if="articles.length>0">
                         <h3>
                             <v-progress-circular
                                     indeterminate
                                     color="primary"
                             ></v-progress-circular>
                             <span style="margin-left: 1em">加载中</span></h3>
+                    </div>
+                    <div v-if="articles.length===0" class="nothing">
+                        <h3>暂无内容</h3>
                     </div>
                     <div class="bottom"></div>
                 </v-tab-item>
@@ -126,7 +135,7 @@
                                     :key="item.nickname"
                                     avatar
                                     ripple
-                                    @click="toggle(item.userId)"
+                                    @click="toggle(item.userID)"
                             >
                                 <v-list-tile-avatar>
                                     <img :src="item.headportrait" alt="">
@@ -144,13 +153,17 @@
                         </template>
                     </v-list>
                     <div class="load-more-normal" v-infinite-scroll="loadMore"
-                        infinite-scroll-disabled="loading_C" infinite-scroll-distance="0" v-show="loading_C">
+                         infinite-scroll-disabled="loading_C" infinite-scroll-distance="0" v-show="loading_C&&no_C"
+                         v-if="users.length>0">
                         <h3>
                             <v-progress-circular
                                     indeterminate
                                     color="primary"
                             ></v-progress-circular>
                             <span style="margin-left: 1em">加载中</span></h3>
+                    </div>
+                    <div v-if="users.length===0" class="nothing">
+                        <h3>暂无内容</h3>
                     </div>
                 </v-tab-item>
             </v-tabs>
@@ -201,6 +214,10 @@
 
                 //第一次进入页面的加载
                 first_loading: true,
+                no_A: true,
+                no_B: true,
+                no_C: true,
+                nodata: false,
             }
         },
 
@@ -210,7 +227,7 @@
                 let that = this
                 this.reset()
                 let searching = this.search
-                if(searching === "")return
+                if (searching === "") return
 
                 this.loading_A = true;
                 this.loading_B = true;
@@ -234,7 +251,7 @@
                 console.log('infinity')
             },
             toggle(id) {
-                this.$router.push({name: 'user', query: {id: id}});
+                this.$router.push({name: 'detail', query: {id: id}});
             },
             //用于重新搜索时的状态重置
             reset() {
@@ -263,12 +280,12 @@
                     active_page = this.user_page;
                 }
                 //繁忙状态开启
-                if(now_active === 0)
+                if (now_active === 0)
                     that.loading_A = true;
-                else if(now_active === 1)
-                    that.loading_B =true;
-                else if(now_active === 2)
-                    that.loading_C =true;
+                else if (now_active === 1)
+                    that.loading_B = true;
+                else if (now_active === 2)
+                    that.loading_C = true;
 
                 //流加载查询
                 this.$api.algorithm.vague_search(this.now_search, type, active_page).then(res => {
@@ -277,6 +294,12 @@
                         let nodata = false;
                         if (res.data.data.length <= 0) {
                             nodata = true;
+                            if (now_active === 0)
+                                that.no_A = false;
+                            else if (now_active === 1)
+                                that.no_B = false;
+                            else if (now_active === 2)
+                                that.no_C = false;
                         }
 
                         //根据tab将数据追加到指定容器中
@@ -291,15 +314,21 @@
                         }
 
                         //繁忙状态关闭
-                        if(now_active === 0)
+                        if (now_active === 0)
                             that.loading_A = false;
-                        else if(now_active === 1)
-                            that.loading_B =false;
-                        else if(now_active === 2)
-                            that.loading_C =false;
-                        }
+                        else if (now_active === 1)
+                            that.loading_B = false;
+                        else if (now_active === 2)
+                            that.loading_C = false;
+                    }
                 })
-            }
+            },
+            view_detail(id) {
+                this.$router.push({name: 'question', query: {id: id}});  // 跳转到话题详情页
+            },
+            jump_article(id) {
+                this.$router.push({name: 'article', query: {id: id}})
+            },
         },
         watch: {
             search(val) {
@@ -402,5 +431,11 @@
     .load-more-hide {
         height: 0;
         z-index: -5;
+    }
+
+    .nothing {
+        text-align: center;
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
     }
 </style>

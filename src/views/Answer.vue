@@ -1,7 +1,7 @@
 <template>
     <div class="answer">
         <v-toolbar dark flat color="primary" app dense scroll-off-screen>
-            <v-btn icon @click="$router.push($route.query.redirect || {name: 'topic'})">
+            <v-btn icon @click="$router.back()">
                 <v-icon>arrow_back</v-icon>
             </v-btn>
 
@@ -61,40 +61,55 @@
 
         <!--回答的答案-->
 
-        <div class="intro" style="padding-left: 1em; padding-right: 1em;">
-            <p v-html="intro.replace(/\n/g, '<br>')"></p>
+        <div class="intro" style="padding-left: 1em; padding-right: 1em;margin-bottom: 1em;">
+            <p v-html="intro.replace(/\n/g, '<br>')" style="font-size: medium"></p>
         </div>
-
-        <!--评论这部分,是有组件的，但是这里不用，仅获取前三个类似热评一样的东西，不然样式不好写-->
+        <v-divider></v-divider>
         <div style="width: 100%">
-            <ButtonGroup style="width: 100%;height: 6em;margin-top: 2em">
-                <Button type="warning" icon="md-arrow-dropup"
+            <ButtonGroup
+                    style="width: 100%;margin-top: 1em;position:relative;overflow: hidden;height: 5em;margin-bottom: 1em">
+                <Button type="warning" icon="md-arrow-dropup" style="height: 4em"
                         :class="{mid:select===0,long:select===1,hide:select===2,display:hidden1}"
                         @click="agree_answer()" :hidden="select===2">{{select!==0?'已':''}}点赞 {{agree}}
                 </Button>
-                <Button icon="md-arrow-dropdown"
+                <Button icon="md-arrow-dropdown" style="height: 4em"
                         :class="{mid2:select===0,long:select===2,hide2:select===1,display:hidden2}"
                         @click="disagree_answer()" :hidden="select===1">{{select!==0?'已':''}}点踩 {{disagree}}
                 </Button>
             </ButtonGroup>
         </div>
+
+        <!--<div style="width: 100%;height: 5em;border-top: 1px #eee solid;border-bottom: 1px #eee solid;display: flex;line-height: 1.5;">-->
+        <!--<div style="height:100%;flex: 0 0 50%;border-right: 1px #eee solid;display: flex;align-items: center;justify-content: center;" @click="agree_answer()">-->
+        <!--<v-icon style="width: 30px" :class="select===1?'agree':'no'">thumb_up_alt</v-icon>-->
+        <!--<span style="font-size: 1.5em" :class="select===1?'agree':'no'">赞同</span>-->
+        <!--</div>-->
+        <!--<div style="height:100%;flex: 0 0 50%;border-right: 1px #eee solid;display: flex;align-items: center;justify-content: center;" @click="disagree_answer()">-->
+        <!--<v-icon style="width: 30px" :class="select===2?'disagree':'no'">thumb_down_alt</v-icon>-->
+        <!--<span style="font-size: 1.5em" :class="select===2?'agree':'no'">反对</span>-->
+        <!--</div>-->
+        <!--</div>-->
         <div class="comment" style="padding-left: 1em; padding-right: 1em;">
             <h2>评论</h2>
-            <router-link :to="{name: 'comment', params: {id: $route.params.id,type:1}}">
-                <div v-for="(comment, index) in comments" :key="index" class="comment-item">
-                    <div class="comment-user">
-                        <img :src="comment.avatar" alt=""><!-- 头像 -->
-                        <span class="comment-user-name">{{ comment.nickname }}</span>
-                        <!--<span class="comment-user-tag">从业者</span>-->
-                        <div class="comment-like"><span class="subheading">{{ comment.agree }}</span>
-                            <v-icon style="height: 30px;margin-left: 3px">thumb_up</v-icon>
-                        </div>
-                    </div>
-                    <div>
-                        <p>{{ comment.content.length > 20 ? comment.content.substring(0, 20) + '...' : comment.content
-                            }}</p>
-                    </div>
+            <div v-for="(comment, index) in comments" :key="index" class="comment-item" v-if="index<3">
+                <div class="comment-user" @click="$router.push({name:'detail',query:{id:comment.id}})">
+                    <img :src="comment.avatar" alt=""><!-- 头像 -->
+                    <h2>{{ comment.nickname }}</h2>
+                    <span class="comment-user-tag">{{comment.usergroup.text}}</span>
+                    <!--<div class="comment-like"><span class="subheading">{{ comment.agree }}</span>-->
+                    <!--<v-icon style="height: 30px;margin-left: 3px">thumb_up</v-icon>-->
+                    <!--</div>-->
+
                 </div>
+                <div style="margin-left: 4em;margin-bottom: 1em">
+                    <p style="font-size: medium">{{ comment.content.length > 20 ? comment.content.substring(0, 20) +
+                        '...' : comment.content
+                        }}</p>
+                </div>
+            </div>
+            <router-link :to="{name: 'comment', query: {id: $route.query.id,type:1}}" v-if="comments.length>=3">
+                <h2 style="align-items: center;color: #ffcc00;text-align: center;margin: 1em;">加载更多</h2>
+                <v-divider></v-divider>
             </router-link>
         </div>
 
@@ -159,27 +174,14 @@
                 comments: [
                     {
                         agree: 1,
-                        content: "这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论",
-                        create_time: "Sat, 29 Dec 2018 11:15:40 GMT",
+                        content: "加载中",
+                        create_time: "加载中",
                         avatar: "",
                         id: 1,
-                        nickname: "拉拉人"
-                    },
-                    {
-                        agree: 0,
-                        content: "这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论",
-                        create_time: "Sat, 15 Dec 2018 19:08:09 GMT",
-                        avatar: "",
-                        id: 1,
-                        nickname: "拉拉人"
-                    },
-                    {
-                        agree: 0,
-                        content: "这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论这是评论",
-                        create_time: "Sat, 15 Dec 2018 19:08:36 GMT",
-                        avatar: "",
-                        id: 1,
-                        nickname: "拉拉人"
+                        nickname: "加载中",
+                        usergroup: {
+                            text: ''
+                        }
                     },
                 ],
                 name: '',
@@ -190,6 +192,8 @@
                 select: 0,
                 user_id: 0,
                 follow: false,
+                hidden1: false,
+                hidden2: false,
             }
         },
 
@@ -225,7 +229,8 @@
                                 avatar: res.data.data[i].user_headportrait,
                                 id: res.data.data[i].user_id,
                                 nickname: res.data.data[i].user_nickname,
-                                agree: res.data.data[i].agree
+                                agree: res.data.data[i].agree,
+                                usergroup: res.data.data[i].usergroup,
                             })
                         }
                     }
@@ -269,40 +274,40 @@
                 })
             },
             agree_answer() {
-                // if (this.select === 1) {
-                //     this.$api.answer.un_agree_answer(this.$route.query.id).then(res => {
-                //         if (res.data.code === 1) {
-                //             this.select = 0;
-                //             this.agree--;
-                //         }
-                //     })
-                // } else {
-                //     this.$api.answer.agree_answer(this.$route.query.id).then(res => {
-                //         if (res.data.code === 1) {
-                //             this.select = 1;
-                //             this.agree++;
-                //         }
-                //     })
-                // }
-                this.agreethis=1
+                if (this.select === 1) {
+                    this.$api.answer.un_agree_answer(this.$route.query.id).then(res => {
+                        if (res.data.code === 1) {
+                            this.select = 0;
+                            this.agree--;
+                        }
+                    })
+                } else {
+                    this.$api.answer.agree_answer(this.$route.query.id).then(res => {
+                        if (res.data.code === 1) {
+                            this.select = 1;
+                            this.agree++;
+                        }
+                    })
+                }
+                // this.agreethis = 1
             },
             disagree_answer() {
-                // if (this.select === 2) {
-                //     this.$api.answer.un_disagree_answer(this.$route.query.id).then(res => {
-                //         if (res.data.code === 1) {
-                //             this.select = 0;
-                //             this.disagree--;
-                //         }
-                //     })
-                // } else {
-                //     this.$api.answer.disagree_answer(this.$route.query.id).then(res => {
-                //         if (res.data.code === 1) {
-                //             this.select = 2;
-                //             this.disagree++;
-                //         }
-                //     })
-                // }
-                this.agreethis=2
+                if (this.select === 2) {
+                    this.$api.answer.un_disagree_answer(this.$route.query.id).then(res => {
+                        if (res.data.code === 1) {
+                            this.select = 0;
+                            this.disagree--;
+                        }
+                    })
+                } else {
+                    this.$api.answer.disagree_answer(this.$route.query.id).then(res => {
+                        if (res.data.code === 1) {
+                            this.select = 2;
+                            this.disagree++;
+                        }
+                    })
+                }
+                // this.agreethis = 2
             },
             get_answer_agree_state() {
                 this.$api.answer.get_answer_agree_state(this.$route.query.id).then(res => {
@@ -461,6 +466,7 @@
         /*-webkit-animation: back_ 2s; !* Safari 和 Chrome *!*/
         /*-o-animation: back_ 2s; !* Opera *!*/
     }
+
     .mid2 {
         position: absolute;
         left: 50%;
@@ -496,6 +502,7 @@
         /*-webkit-animation: small_ 0.5s; !* Safari 和 Chrome *!*/
         /*-o-animation: small_ 0.5s; !* Opera *!*/
     }
+
     .hide2 {
         position: absolute;
         width: 0;
@@ -558,6 +565,10 @@
 
     .disagree {
         color: #ffcc00
+    }
+
+    .display {
+        display: none !important;
     }
 </style>
 <style>

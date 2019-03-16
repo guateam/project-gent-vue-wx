@@ -120,7 +120,7 @@
                         } else {
                             // this.snackbar=true;
                             // this.text='连接超时，请检查网络'
-                            this.$store.commit('showInfo', '连接超时，请检查网络');
+                            this.$store.commit('showInfo', '请先登录');
                         }
                     }
                 })

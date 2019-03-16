@@ -18,6 +18,26 @@
                     :options="editorOption">
             </quill-editor>
         </div>
+        <v-dialog
+                v-model="busy"
+                hide-overlay
+                persistent
+                width="300"
+        >
+            <v-card
+                    color="primary"
+                    dark
+            >
+                <v-card-text>
+                    正在发送···
+                    <v-progress-linear
+                            indeterminate
+                            color="white"
+                            class="mb-0"
+                    ></v-progress-linear>
+                </v-card-text>
+            </v-card>
+        </v-dialog>
     </div>
 </template>
 
@@ -67,11 +87,13 @@
                         }
                     },
                     placeholder: '请在此输入内容'
-                }
+                },
+                busy:false,
             }
         },
         methods: {
             send() {
+                this.busy=true;
                 let data = {
                     content: this.content,
                     answer_type: 0,
@@ -80,6 +102,7 @@
                 };
                 this.$api.answer.add_answer(data).then(res => {
                     if (res.data.code === 1) {
+                        this.busy=false;
                         this.$router.back()
                     } else {
                         this.$store.commit('showInfo', res.data.msg);
