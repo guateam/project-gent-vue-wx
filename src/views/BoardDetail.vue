@@ -193,7 +193,7 @@ height: 100%;border-radius: 50%">
             join() {
                 this.$api.board.sign_to_demand(this.$route.query.id).then(res => {
                     if (res.data.code === 1) {
-                        this.sign=res.data.data.state;
+                        this.sign = 0;
                     }
                 })
             },
