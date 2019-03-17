@@ -88,11 +88,11 @@ height: 100%;border-radius: 50%"
                     </p>
                 </v-flex>
             </v-layout>
-            <v-divider></v-divider>
+            <v-divider v-if="data.length!==0"></v-divider>
             <h1 v-if="data.length===0" style="text-align: center">暂无数据</h1>
         </div>
         <!--占位的盒子   STAR-->
-        <v-flex xs12 style="height: 60px;background-color: white"></v-flex>
+        <v-flex xs12 style="height: 60px;background-color: #fafafa"></v-flex>
         <!--占位的盒子   END-->
         <div class="chatinput">
             <div class="box">
