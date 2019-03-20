@@ -25,8 +25,8 @@
                         </v-flex>
                         <v-flex xs8
                                 style="height: 100%;display: flex;justify-content: center;flex-direction: column;text-align: left">
-                            <div style="height: 25%;display: flex;align-items: center;"><h2>{{item.title}}</h2></div>
-                            <div style="height: 25%;display: flex;align-items: center;overflow: hidden"><h4>
+                            <div style="height: 25%;display: flex;align-items: center;"><h2 style="overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">{{item.title}}</h2></div>
+                            <div style="height: 25%;display: flex;align-items: center;overflow: hidden"><h4 style="overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">
                                 {{item.content}}</h4></div>
                             <div style="height: 25%;display: flex;align-items: center;"><h4>发布单位：<span
                                     style="color: blue;">{{item.nickname}}</span></h4></div>
