@@ -36,9 +36,9 @@
         <v-card-title>
           <span class="font-weight-bold">基础功能 ({{ base }}/2)</span>
         </v-card-title>
-        <v-card-text>
+        <v-card-text >
           <v-layout class="text-xs-center">
-            <v-flex xs4>
+            <v-flex xs6>
               <v-layout column>
                 <v-flex>
                   <v-btn icon fab dark small :color="$store.state.userInfo.level < authority.publishInfo ? 'grey' : 'success'">
@@ -49,7 +49,7 @@
                 <v-flex><span class="condition font--text">等级 {{ authority.publishInfo }} </span></v-flex>
               </v-layout>
             </v-flex>
-            <v-flex xs4>
+            <v-flex xs6>
               <v-layout column>
                 <v-flex>
                   <v-btn icon fab dark small :color="$store.state.userInfo.level < authority.colorfulFont ? 'grey' : 'success'">
@@ -60,7 +60,6 @@
                 <v-flex><span class="condition font--text">等级 {{ authority.colorfulFont }} </span></v-flex>
               </v-layout>
             </v-flex>
-            <v-flex xs4></v-flex>
           </v-layout>
         </v-card-text>
       </v-card>
@@ -71,7 +70,7 @@
         </v-card-title>
         <v-card-text>
           <v-layout class="text-xs-center">
-            <v-flex xs4>
+            <v-flex xs6>
               <v-layout column>
                 <v-flex>
                   <v-btn icon fab dark small :color="$store.state.userInfo.level < authority.editQuestionTag ? 'grey' : 'success'">
@@ -82,7 +81,7 @@
                 <v-flex><span class="condition font--text">等级 {{ authority.editQuestionTag }} </span></v-flex>
               </v-layout>
             </v-flex>
-            <v-flex xs4>
+            <v-flex xs6>
               <v-layout column>
                 <v-flex>
                   <v-btn icon fab dark small :color="$store.state.userInfo.level < authority.editQuestion ? 'grey' : 'success'">
@@ -93,7 +92,6 @@
                 <v-flex><span class="condition font--text">等级 {{ authority.editQuestion }} </span></v-flex>
               </v-layout>
             </v-flex>
-            <v-flex xs4></v-flex>
           </v-layout>
         </v-card-text>
       </v-card>
@@ -104,7 +102,7 @@
         </v-card-title>
         <v-card-text>
           <v-layout class="text-xs-center">
-            <v-flex xs4>
+            <v-flex xs6>
               <v-layout column>
                 <v-flex>
                   <v-btn icon fab dark small :color="$store.state.userInfo.level < authority.priorReport ? 'grey' : 'success'">
@@ -115,7 +113,7 @@
                 <v-flex><span class="condition font--text">等级 {{ authority.priorReport }} </span></v-flex>
               </v-layout>
             </v-flex>
-            <v-flex xs4>
+            <v-flex xs6>
               <v-layout column>
                 <v-flex>
                   <v-btn icon fab dark small :color="$store.state.userInfo.level < authority.priorAudit ? 'grey' : 'success'">
@@ -126,7 +124,6 @@
                 <v-flex><span class="condition font--text">等级 {{ authority.priorAudit }} </span></v-flex>
               </v-layout>
             </v-flex>
-            <v-flex xs4></v-flex>
           </v-layout>
         </v-card-text>
       </v-card>
@@ -137,7 +134,7 @@
         </v-card-title>
         <v-card-text>
           <v-layout class="text-xs-center">
-            <v-flex xs4>
+            <v-flex xs12>
               <v-layout column>
                 <v-flex>
                   <v-btn icon fab dark small :color="$store.state.userInfo.level < authority.strongDisagree ? 'grey' : 'success'">
@@ -148,8 +145,6 @@
                 <v-flex><span class="condition font--text">等级 {{ authority.strongDisagree }} </span></v-flex>
               </v-layout>
             </v-flex>
-            <v-flex xs4></v-flex>
-            <v-flex xs4></v-flex>
           </v-layout>
         </v-card-text>
       </v-card>
@@ -160,7 +155,7 @@
         </v-card-title>
         <v-card-text>
           <v-layout class="text-xs-center">
-            <v-flex xs4>
+            <v-flex xs12>
               <v-layout column>
                 <v-flex>
                   <v-btn icon fab dark small :color="$store.state.userInfo.level < authority.recommendArticle ? 'grey' : 'success'">
@@ -171,8 +166,6 @@
                 <v-flex><span class="condition font--text">等级 {{ authority.recommendArticle }} </span></v-flex>
               </v-layout>
             </v-flex>
-            <v-flex xs4></v-flex>
-            <v-flex xs4></v-flex>
           </v-layout>
         </v-card-text>
       </v-card>

@@ -63,9 +63,7 @@
                 <v-tab :key="2" ripple>文章</v-tab>
                 <v-tab :key="3" ripple>用户</v-tab>
                 <v-tab-item :key="1">
-                    <!--这部分直接把topic的搬过来就好了，我懒的写静态数据了，对接的时候直接换一下吧-->
-                    <question-card @click.native="view_detail(question.questionID)" v-for="(question,idx) in questions"
-                                   :key="idx" v-bind="question"></question-card>
+                    <question-card @click.native="view_detail(question.questionID)" v-for="(question,idx) in questions" :key="idx" v-bind="question" style="width: 100%"></question-card>
 
                     <div class="load-more-normal" v-infinite-scroll="loadMore"
                          infinite-scroll-disabled="loading_A" infinite-scroll-distance="0"
@@ -85,7 +83,7 @@
                 <v-tab-item :key="2">
                     <v-container grid-list-md>
                         <v-layout row wrap>
-                            <v-flex xs12 v-for="(value,i) in articles" :key="i">
+                            <v-flex xs12 v-for="(value,i) in articles" :key="i" style="width: 100%">
                                 <v-hover>
                                     <v-card
                                             slot-scope="{ hover }"
@@ -182,7 +180,7 @@
             return {
                 active: 0,
                 text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco 
+                        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
                         laboris nisi ut aliquip ex ea commodo consequat.`,
                 items: [],
                 model: "",

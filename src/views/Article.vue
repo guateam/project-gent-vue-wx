@@ -83,7 +83,7 @@
                 <v-flex xs3>
                     <div style="width: 65px;height: 65px;overflow:hidden;border-radius: 50%">
                         <img :src="data.head_portrait" alt="" style="width: 100%;
-height: 100%;border-radius: 50%">
+height: 100%;border-radius: 50%;object-fit: cover">
                     </div>
                 </v-flex>
                 <v-flex xs9>

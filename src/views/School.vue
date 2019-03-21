@@ -30,7 +30,8 @@
                         <!--</v-carousel>-->
                         <Carousel autoplay loop dots="none" arrow="always" style="z-index: 1 !important;">
                             <CarouselItem v-for="item in items">
-                                <div class="banner-image" style="background-size: cover;background-position: center" v-bind:style="{backgroundImage:'url(' + item.src + ')'}"
+                                <div class="banner-image" style="background-size: cover;background-position: center"
+                                     v-bind:style="{backgroundImage:'url(' + item.src + ')'}"
                                      @click="jump_url(item.url)">
                                     <span class="banner">{{item.title}}</span>
                                 </div>
@@ -47,6 +48,7 @@
                                             :class="`elevation-${hover ? 12 : 2}`"
                                             class="mx-auto"
                                             @click="jump_article(value.id)"
+                                            style="min-height: 180px !important;"
                                     >
                                         <v-img
                                                 :aspect-ratio="16/9"
@@ -54,7 +56,8 @@
                                         ></v-img>
                                         <v-card-title>
                                             <div>
-                                                <span class="inline"><b>{{value.title}}</b></span>
+                                                <span class="inline"
+                                                      style="overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;"><b>{{value.title}}</b></span>
                                                 <div>
                                                     <div class="grey--text text--darken-2">
                                                         <span v-for="(tag, index) in value.tags" :key="index">{{ index===0 ? '' : '/' }}{{ tag.text }}</span>
@@ -103,7 +106,7 @@
                         <Col span="14" offset="10">
                             <v-layout row>
                                 <v-flex xs12 sm6 offset-sm3>
-                                    <v-card>
+                                    <v-flex>
                                         <v-list two-line>
 
                                             <!--<v-list-tile-->
@@ -162,7 +165,7 @@
                                                 <h3>暂无内容</h3>
                                             </div>
                                         </v-list>
-                                    </v-card>
+                                    </v-flex>
                                 </v-flex>
                             </v-layout>
                         </Col>
@@ -352,6 +355,7 @@
         z-index: 1;
     }
 
-    .inline {
+    >>> .v-sheet, .v-card {
+        min-height: 180px !important;
     }
 </style>
