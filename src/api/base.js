@@ -16,6 +16,7 @@ const base = {
     algorithm: baseUrl + '/algorithm',
     board: baseUrl + '/board',
     enterprise: baseUrl + '/enterprise',
+    other: baseUrl + '/other',
 };
 
 export default base;

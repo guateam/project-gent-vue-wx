@@ -8,11 +8,15 @@ export default new Router({
         // 重定向到话题
         {path: '/', name: 'index', redirect: {name: 'topic'}},
         // 话题
-        {path: '/topic', name: 'topic', component: () => import('./views/Topic.vue'), meta: {keepAlive: true}},
+        {path: '/topic', name: 'topic', component: () => import('./views/Topic.vue')},
         // 告示板
         {path: '/board', name: 'board', component: () => import('./views/Board.vue')},
         // 登录
         {path: '/login', name: 'login', component: () => import('./views/Login.vue')},
+        // 忘记密码
+        {path: '/forget-password', name: 'forget-password', component: () => import('./views/ForgetPassword.vue')},
+        // 设定新密码
+        {path: '/set-new-password', name: 'set-new-password', component: () => import('./views/SetNewPassword.vue')},
         // 注册
         {path: '/register', name: 'register', component: () => import('./views/Register.vue')},
         // 设置
@@ -105,13 +109,7 @@ export default new Router({
                     meta: {requireLogin: true},
                     component: () => import('./views/Verified.vue')
                 },
-                // 积分详情
-                {
-                    path: 'exp-detail',
-                    name: 'exp-detail',
-                    meta: {requireLogin: true},
-                    component: () => import('./views/ExpDetail.vue')
-                },
+
                 // 历史发布
                 {
                     path: 'historical-post',
@@ -155,7 +153,19 @@ export default new Router({
         {
             path: '/chat',
             name: 'chat',
-            component: () => import('./views/NewChat.vue'),
+            component: () => import('./views/Chat.vue'),
+        },
+        // 群聊
+        {
+            path: '/group-chat/:id/:title',
+            name: 'group-chat',
+            component: () => import('./views/GroupChat.vue')
+        },
+        // 群聊设置
+        {
+            path: '/group-settings/:id/:title',
+            name: 'group-settings',
+            component: () => import('./views/GroupSettings.vue')
         },
         // 消息
         {
@@ -366,6 +376,25 @@ export default new Router({
             name: 'first-login',
             component: () => import('./views/FirstLogin.vue')
         },
+        {
+            path: '/sign-board',
+            name: 'sign-board',
+            component: () => import('./views/SignBoard.vue')
+        },
+        // 积分详情
+        {
+            path: 'exp-detail',
+            name: 'exp-detail',
+            meta: {requireLogin: true},
+            component: () => import('./views/ExpDetail.vue')
+        },
+        // 激活账号
+        {
+            path: 'activate-account',
+            name: 'activate-account',
+            meta: {requireLogin: true},
+            component: () => import('./views/ActivateAccount.vue')
+        },
         // 提现
         {
             path: 'check-out',
@@ -380,5 +409,26 @@ export default new Router({
             meta: {requireLogin: true},
             component: () => import('./views/Recharge.vue')
         },
+        // 咨询详情
+        {
+            path: '/advisory-detail',
+            name: 'advisory-detail',
+            meta: {requireLogin: true},
+            component: () => import('./views/AdvisoryDetail.vue')
+        },
+        // 回答咨询
+        {
+            path: '/advisory-answer',
+            name: 'advisory-answer',
+            meta: {requireLogin: true},
+            component: () => import('./views/AdvisoryAnswer.vue')
+        },
+        // 举报
+        {
+            path: '/report',
+            name: 'report',
+            meta: {requireLogin: true},
+            component: () => import('./views/Report.vue')
+        }
     ],
 });

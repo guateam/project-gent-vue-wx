@@ -30,19 +30,19 @@
                 <v-layout row wrap>
                     <v-flex xs4 style="align-items: center;justify-content: space-between;flex-direction: column" @click="$router.push({name:'requirement-publish'})">
                         <div>
-                            <v-icon large color="#99FF00">event_note</v-icon>
+                            <v-icon large color="white" style="background-color:rgb(76,175,80); padding:7px;   border-radius:50px">event_note</v-icon>
                         </div>
                         <div style="margin-top: 5px">发布需求</div>
                     </v-flex>
                     <v-flex xs4 style="align-items: center;justify-content: space-between;flex-direction: column" @click="$router.push({name:'requirement-check'})">
                         <div>
-                            <v-icon large color="#99FFFF">library_books</v-icon>
+                            <v-icon large color="white" style="background-color:rgb(249,62,44); padding:7px; border-radius:50px">library_books</v-icon>
                         </div>
                         <div style="margin-top: 5px">需求审核</div>
                     </v-flex>
                     <v-flex xs4 style="align-items: center;justify-content: space-between;flex-direction: column" @click="$router.push({name:'requirement-history'})">
                         <div>
-                            <v-icon large color="#CC66CC">question_answer</v-icon>
+                            <v-icon large color="white" style="background-color:#8B4789; padding:7px; border-radius:50px">question_answer</v-icon>
                         </div>
                         <div style="margin-top: 5px">历史发布</div>
                     </v-flex>
@@ -226,6 +226,8 @@
         position: absolute;
         bottom: 0;
         width: 100%;
+        height:30px;
+        padding-top: 3px;
         background: rgba(0, 0, 0, 0.5);
         text-align: center;
         font-size: 1.3em;

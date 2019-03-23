@@ -198,14 +198,14 @@ height: 100%;border-radius: 50%">
                 showAll_two: false,
                 showAll_three: false,
                 data: {
-                    title: 'SCgirl电竞联盟招收新成员',
-                    nickname: 'SCgirl电竞',
+                    title: '加载中...',
+                    nickname: '加载中',
                     usergroup: {
                         text: '企业'
                     },
                     level: 0,
-                    description: '250w猛男指定认证账号，一切战术转换家，没有智力只会莽',
-                    content: 'APM250+，韩总及以上水平，没有智力视力不好及爱好女装可优先考虑',
+                    description: '加载...',
+                    content: '加载中...',
                     read: 0,
                     cover: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551871818376&di=23a06b4313b4716598c3448d8803049e&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F3c6d55fbb2fb431690697fb32aa4462308f7d381.jpg',
                     head_portrait: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551871796439&di=b76ea1eec37f57c40181636afbe7d303&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F01%2F69%2F80%2F595f67c2239cb_610.jpg',

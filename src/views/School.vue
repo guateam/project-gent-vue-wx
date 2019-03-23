@@ -16,7 +16,7 @@
                 <v-tab :key="1">分类</v-tab>
             </v-tabs>
         </v-toolbar>
-        <v-card>
+        <v-card flat>
             <v-tabs-items v-model="tabs">
                 <v-tab-item :key="0">
                     <v-flex xs12>
@@ -32,7 +32,7 @@
                             <CarouselItem v-for="item in items">
                                 <div class="banner-image" style="background-size: cover;background-position: center"
                                      v-bind:style="{backgroundImage:'url(' + item.src + ')'}"
-                                     @click="jump_url(item.url)">
+                                     @click="jump_url(item.url,item.title)">
                                     <span class="banner">{{item.title}}</span>
                                 </div>
                             </CarouselItem>
@@ -48,7 +48,7 @@
                                             :class="`elevation-${hover ? 12 : 2}`"
                                             class="mx-auto"
                                             @click="jump_article(value.id)"
-                                            style="min-height: 180px !important;"
+                                            style="min-height: 180px;"
                                     >
                                         <v-img
                                                 :aspect-ratio="16/9"
@@ -104,10 +104,10 @@
 
                         </Col>
                         <Col span="14" offset="10">
-                            <v-layout row>
-                                <v-flex xs12 sm6 offset-sm3>
-                                    <v-flex>
-                                        <v-list two-line>
+                            <v-layout row flat>
+                                <v-flex xs12 sm6 offset-sm3 flat>
+                                    <v-flex flat>
+                                        <v-list two-line flat>
 
                                             <!--<v-list-tile-->
                                             <!--:key="item.articleID"-->
@@ -127,12 +127,13 @@
 
 
                                             <!--</v-list-tile>-->
-                                            <v-hover v-for="value in articles" style="margin-bottom: 0.5em">
+                                            <v-hover v-for="value in articles" style="margin-bottom: 0.5em" flat>
                                                 <v-card
                                                         slot-scope="{ hover }"
                                                         :class="`elevation-${hover ? 12 : 2}`"
                                                         class="mx-auto"
                                                         @click="jump_article(value.articleID)"
+                                                        flat
                                                 >
                                                     <v-img
                                                             :aspect-ratio="16/9"
@@ -206,6 +207,15 @@
                 recommends: []
             }
         },
+        watch: {
+            tabs(val) {
+                if (val === 1) {
+                    this.busy = true;
+                } else {
+                    this.busy = false;
+                }
+            }
+        },
         methods: {
             menu_change(name) {
                 if (name.length === 0) {
@@ -267,8 +277,8 @@
                     }
                 })
             },
-            jump_url(url) {
-                this.$router.push({name: 'browser', query: {url: url}});
+            jump_url(url,title) {
+                this.$router.push({name: 'browser', query: {url: url,title:title}});
             },
             jump_article(id) {
                 this.$router.push({name: 'article', query: {id: id}})
@@ -285,8 +295,13 @@
                     }
                 })
             }
-        }
-        ,
+        },
+        deactivated() {
+            this.busy = true;
+        },
+        activated() {
+            this.busy = false;
+        },
         mounted() {
             this.get_recommend_article();
             this.get_activities();
@@ -355,7 +370,15 @@
         z-index: 1;
     }
 
-    >>> .v-sheet, .v-card {
-        min-height: 180px !important;
+    .inline {
     }
+    /*.elevation-12{*/
+        /*box-shadow: none !important;*/
+    /*}*/
+    /*.elevation-2{*/
+        /*box-shadow: none !important;*/
+    /*}*/
+    /*.v-card{*/
+        /*box-shadow: none !important;*/
+    /*}*/
 </style>

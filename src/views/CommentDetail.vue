@@ -18,10 +18,10 @@ height: 100%;border-radius: 50%">
                     </div>
                 </v-flex>
                 <v-flex xs9>
-                    <div style="display: flex;align-items: center;"><b class="nickname">拉拉人</b><span class="board">专家lv.4</span>
+                    <div style="display: flex;align-items: center;"><b class="nickname"></b><span class="board"></span>
                     </div>
                     <p class="topicdetail">
-                        <span>卡拉之光，如影随形。八门齐开，光复艾尔,卡拉之光，如影随形。八门齐开，光复艾尔卡拉之光，如影随形。八门齐开，光复艾尔卡拉之光，如影随形。八门齐开，光复艾尔</span>
+                        <span></span>
                     </p>
                     <p class="topicdetail" style="margin-top: 5px">
                         <span>20:33</span>
@@ -38,14 +38,14 @@ height: 100%;border-radius: 50%">
                     </div>
                 </v-flex>
                 <v-flex xs9>
-                    <div style="display: flex;align-items: center;"><b class="nickname">拉拉人</b><span class="board">专家lv.4</span>
+                    <div style="display: flex;align-items: center;"><b class="nickname"></b><span class="board"></span>
                     </div>
                     <p class="topicdetail">
-                        <span>回复隔壁老万：卡拉之光，如影随形。八门齐开，光复艾尔</span>
+                        <span></span>
                     </p>
                     <p class="topicdetail" style="margin-top: 5px">
                         <span>20:33</span>
-                        <v-icon style="float:right;margin-right:1em">thumb_up</v-icon>
+                        <v-icon style="float:right;margin-right:1em"></v-icon>
                     </p>
                 </v-flex>
             </v-layout>
@@ -60,13 +60,13 @@ height: 100%;border-radius: 50%">
                     </div>
                 </v-flex>
                 <v-flex xs9>
-                    <div style="display: flex;align-items: center;"><b class="nickname">拉拉人</b><span class="board">专家lv.4</span>
+                    <div style="display: flex;align-items: center;"><b class="nickname"></b><span class="board"></span>
                     </div>
                     <p class="topicdetail">
-                        <span>卡拉之光，如影随形。八门齐开，光复艾尔,卡拉之光，如影随形。八门齐开，光复艾尔卡拉之光，如影随形。八门齐开，光复艾尔卡拉之光，如影随形。八门齐开，光复艾尔</span>
+                        <span></span>
                     </p>
                     <p class="topicdetail" style="margin-top: 5px">
-                        <span>20:33</span>
+                        <span></span>
                         <v-icon style="float:right;margin-right:1em">thumb_up</v-icon>
                     </p>
                 </v-flex>
@@ -80,13 +80,13 @@ height: 100%;border-radius: 50%">
                     </div>
                 </v-flex>
                 <v-flex xs9>
-                    <div style="display: flex;align-items: center;"><b class="nickname">拉拉人</b><span class="board">专家lv.4</span>
+                    <div style="display: flex;align-items: center;"><b class="nickname"></b><span class="board"></span>
                     </div>
                     <p class="topicdetail">
-                        <span>回复隔壁老万：卡拉之光，如影随形。八门齐开，光复艾尔</span>
+                        <span></span>
                     </p>
                     <p class="topicdetail" style="margin-top: 5px">
-                        <span>20:33</span>
+                        <span></span>
                         <v-icon style="float:right;margin-right:1em">thumb_up</v-icon>
                     </p>
                 </v-flex>

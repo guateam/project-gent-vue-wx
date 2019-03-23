@@ -10,7 +10,7 @@
             </v-toolbar-title>
 
             <v-btn icon>
-                <v-icon>more_vert</v-icon>
+                <v-icon @click="$router.push({name:'report'})">error</v-icon>
             </v-btn>
         </v-toolbar>
         <div style="padding-left: 1em; padding-right: 1em;padding-top: 1em">
@@ -42,27 +42,27 @@
                     </div>
                 </div>
                 <div style="display: flex;flex: 0 0 20%;align-items: center;justify-content: center">
-                    <div class="un_follow" @click="follow_user">
+                    <div class="un_follow" @click="follow_user" v-if="!self">
                         {{follow?'已关注':'关注'}}
                     </div>
                 </div>
             </div>
-            <div style="padding-left: 1em; padding-right: 1em;display: flex;justify-content: space-between;border-bottom: 1px solid #EBEBEB">
-                <p>上一次编辑 <span>· {{ latestEdit }}</span>
-                </p>
-                <p>
-                    <span v-for="(tag, idx) in warning" :key="idx">
-                        {{ tag.text }}
-                        <span v-if="idx !== warning.length - 1">&nbsp;&nbsp;·&nbsp;&nbsp;</span>
-                    </span>
-                </p>
-            </div>
         </div>
-
+        <v-divider></v-divider>
         <!--回答的答案-->
 
         <div class="intro" style="padding-left: 1em; padding-right: 1em;margin-bottom: 1em;">
             <p v-html="intro.replace(/\n/g, '<br>')" style="font-size: medium"></p>
+        </div>
+        <div style="padding-left: 1em; padding-right: 1em;display: flex;text-align: right">
+            <p style="width: 100%">上一次编辑 <span>· {{ latestEdit }}</span>
+            </p>
+            <p>
+                    <span v-for="(tag, idx) in warning" :key="idx">
+                        {{ tag.text }}
+                        <span v-if="idx !== warning.length - 1">&nbsp;&nbsp;·&nbsp;&nbsp;</span>
+                    </span>
+            </p>
         </div>
         <v-divider></v-divider>
         <div style="width: 100%">
@@ -148,29 +148,14 @@
         data() {
             return {
                 agreethis: 0,
-                topicTitle: '刚刚研制成功的世界首台分辨力最高紫外超分辨光刻装备意味着什么？对国内芯片行业有何影响？',  // 话题标题
-                intro: '先回答大家最关心的两个问题：\n' +
-                    '1、我们可以实现芯片彻底国产化了吗？\n' +
-                    '答：暂时还不行。\n' +
-                    '2、不吹不黑，这个装备真的这么厉害吗，还是只是吹牛？\n' +
-                    '答：确实很厉害。\n' +
-                    '很多人只盯着新闻里22nm这个指标，其实大家要关注的是“365nm的光源，单次曝光线宽可达22nm”。注意到我加黑的那几个关键词了吗？22nm指标虽然很棒但是业界早就做过了，到底哪里厉害呢？所以关键是用365nm的光源单次曝光做到22nm，懂点光学的就知道这意味着什么：打破了传统的衍射极限。\n' +
-                    '所以在我看来，这台机器最大的价值是验证了表面等离子体（SP）光刻加工的可行性。\n' +
-                    '这台SP光刻机与ASML光刻机对比怎么样呢？举个不恰当的例子吧，这就像是初期的枪械与最厉害的弓箭的对比。早期枪械，比如火铳，无论是射击精度还是射击距离都远远比不上厉害的弓箭，但是如今的狙击枪早已把弓箭甩开十万八千里了，这就是原理性的胜利。\n' +
-                    '要理解刚才说的这个“原理性的胜利”到底是怎么回事，我们首先得回顾一下以ASML为代表的传统光刻机是怎么做的。\n' +
-                    '上面是ASML光刻机简单的原理图，抛开复杂的监测设备不谈，最核心的原理就是通过物镜系统将掩膜版上的图案进行缩印成像。涉及到成像过程，就不得不考虑光的衍射极限。即便抛开所有的几何像差，由于衍射的作用，一个无限小的点成像后也会变成一个弥散斑，被称为“艾里斑”。因此实际光学系统成像的分辨率就是两个艾里斑恰好能够分开的距离。\n' +
-                    '所以由于衍射效应，成像分辨率会受到限制，最终的分辨率取决于波长、数值孔径等参数，波长越小、数值孔径越大分辨率则越高。所以ASML这些年来主要的研究方向就是利用更短的波长（近紫外-深紫外-极紫外）、增大数值孔径（更复杂的物镜、液体浸没）。但是每进一步都变得更加艰难，对系统设计、加工装配、误差检测等等诸多方面都提出了更为苛刻的要求，成本也越来越高昂。\n' +
-                    '那么表面等离子体光刻又是怎么一回事呢？表面等离子体指的是一种局域在物质表面的特殊的电磁波，随着离开物质表面距离的增大迅速衰减，一般认为波长量级以上的区域就不存在了。\n' +
-                    '更为神奇的是，虽然表面等离子体波是由其他电磁波激发的，但是波长会被极大地压缩，而压缩的比例取决于材料的电磁性质等参数。\n' +
-                    '这就意味着，利用表面等离子体波进行光刻时，从原理上就不在受到传统衍射极限的限制了。\n' +
-                    '在光刻机研制方面，我们一直有两个选择：沿用ASML的老路走一遍，还是另辟蹊径通过新原理弯道超车？我们国家很有钱，两个选择都在做。而这台SP光刻机的研制成功，就是让我们看到了弯道超车的可能性。其实从原理上，这简直就不是弯道超车了，而是在别的人还在绕山路的时候，我们尝试着打了一条隧道……虽然还没有完全挖通，但曙光就在眼前了。\n' +
-                    '这个装备是我在的课题组主导研发的（但我没做这个方向），从原理提出、项目立项到装备最终验收通过，前前后后有十几年的时间。十几年磨一剑，挥洒了许许多多的老师和师兄师姐的智慧、汗水与青春。向他们致敬~',  // 回答内容
-                nickname: '看风景的蜗牛君',
-                group: '专家',
-                desc: '杭州光学专家',
-                latestEdit: '19:00',
-                warning: ['原创', '不可转载'],
-                avatar: 'https://www.asgardusk.com/images/none.png',
+                topicTitle: '加载中的标题...',  // 话题标题
+                intro: '加载中的简介...',
+                nickname: '加载中的用户名...',
+                group: '加载中..',
+                desc: '加载中..',
+                latestEdit: '加载中..',
+                warning: [],
+                avatar: '',
                 comments: [
                     {
                         agree: 1,
@@ -194,6 +179,7 @@
                 follow: false,
                 hidden1: false,
                 hidden2: false,
+                self: false
             }
         },
 
@@ -214,6 +200,8 @@
                         this.agree = res.data.data.agree;
                         this.disagree = res.data.data.disagree;
                         this.user_id = res.data.data.user_id;
+                        this.get_user_follow_state();
+                        this.self = res.data.data.user_id == this.$store.state.userInfo.user_id;
                     }
                 })
             },
@@ -266,12 +254,14 @@
                 })
             },
             send() {
-                this.$api.answer.add_answer_comment(this.$route.query.id, this.comment_word).then(res => {
-                    if (res.data.code === 1) {
-                        this.comment_word = '';
-                        this.getCommentData();
-                    }
-                })
+                if (this.comment_word === '') {
+                    this.$api.answer.add_answer_comment(this.$route.query.id, this.comment_word).then(res => {
+                        if (res.data.code === 1) {
+                            this.comment_word = '';
+                            this.getCommentData();
+                        }
+                    })
+                }
             },
             agree_answer() {
                 if (this.select === 1) {
@@ -326,19 +316,28 @@
                 })
             },
             follow_user() {
-                if (this.follow) {
-                    this.$api.account.un_follow_user(this.user_id).then(res => {
-                        if (res.data.code === 1) {
-                            this.follow = false;
-                        }
-                    })
-                } else {
-                    this.$api.account.un_follow_user(this.user_id).then(res => {
-                        if (res.data.code === 1) {
-                            this.follow = true;
-                        }
-                    })
+                if (!this.self) {
+                    if (this.follow) {
+                        this.$api.account.un_follow_user(this.user_id).then(res => {
+                            if (res.data.code === 1) {
+                                this.follow = false;
+                                this.$store.state.userInfo.follow++;
+                            }
+                        })
+                    } else {
+                        this.$api.account.follow_user(this.user_id).then(res => {
+                            if (res.data.code === 1) {
+                                this.follow = true;
+                                this.$store.state.userInfo.follow--;
+                            }
+                        })
+                    }
                 }
+            },
+            set_exp_change() {
+                this.$api.account.set_exp_change(1, '浏览回答').then(res => {
+
+                })
             }
         },
 
@@ -348,6 +347,7 @@
             this.get_follow_state();
             this.add_user_action(this.$route.query.id);
             this.get_answer_agree_state();
+            this.set_exp_change();
         },
     }
 </script>

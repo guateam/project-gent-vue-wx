@@ -15,7 +15,7 @@
                     grid-list-lg
             >
                 <v-layout row wrap>
-                    <v-flex xs12 v-if="!$route.query.state">
+                    <v-flex xs12 v-if="!state">
                         <v-card color="blue-grey darken-2" class="white--text">
                             <v-card-title primary-title>
                                 <div>
@@ -28,7 +28,7 @@
                             </v-card-actions>
                         </v-card>
                     </v-flex>
-                    <v-flex xs12 v-if="$store.state.userInfo.group.value===1&&$route.query.state">
+                    <v-flex xs12 v-if="$store.state.userInfo.group.value===1&&state">
                         <v-card color="primary" class="white--text">
                             <v-card-title primary-title>
                                 <div>
@@ -41,7 +41,7 @@
                             </v-card-actions>
                         </v-card>
                     </v-flex>
-                    <v-flex xs12 v-if="$store.state.userInfo.group.value===1&&$route.query.state">
+                    <v-flex xs12 v-if="$store.state.userInfo.group.value===1&&state">
                         <v-card color="blue light" class="white--text">
                             <v-card-title primary-title>
                                 <div>
@@ -54,7 +54,7 @@
                             </v-card-actions>
                         </v-card>
                     </v-flex>
-                    <v-flex xs12 v-if="$store.state.userInfo.group.value!==1&&$route.query.state">
+                    <v-flex xs12 v-if="$store.state.userInfo.group.value!==1&&state">
                         <v-card color="blue light" class="white--text">
                             <v-card-title primary-title>
                                 <div>
@@ -72,12 +72,21 @@
 
 <script>
     export default {
-        name: "verified"
+        name: "verified",
+        data() {
+            return {
+                state: true
+            }
+        },
+        mounted() {
+            if (this.$route.query.state === false || this.$route.query.state === 'false') {
+                this.state = false;
+            }
+        }
     }
 </script>
 
 <style scoped>
-    .bigbox {
 
     .bigbox {
         position: fixed;
@@ -91,5 +100,5 @@
         background-color: white;
     }
 
-    }
+
 </style>

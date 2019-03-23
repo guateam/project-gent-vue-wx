@@ -6,7 +6,7 @@
                     <v-icon large color="white">keyboard_arrow_left</v-icon>
                 </v-btn>
             </div>
-            <span style="color: #fff;font-size: 20px;font-weight: 500;line-height: 1;letter-spacing: .02em;font-family: Roboto,sans-serif;">内容搜索</span>
+            <span class="headline" style="color: #fff;font-weight: 500;line-height: 1;letter-spacing: .02em;font-family: Roboto,sans-serif;">内容搜索</span>
             <div style="width: 45px;height: 45px;margin-right: 14px;display: flex;align-items: center;justify-content: center;color: #fff;font-size: 17px;font-weight: 500;line-height: 1;letter-spacing: .02em;font-family: Roboto,sans-serif;">
             </div>
         </div>
@@ -53,9 +53,15 @@
                     whatshot
                 </v-icon>
                     {{it.content}}
-                <v-icon small style="float:right;margin-right: 2em">
+
+                <!--<v-icon small style="float:right;margin-right: 2em">-->
+                    <!--call_made-->
+                <!--</v-icon>-->
+                <span style="float:right;margin-right: 2em">
+                    {{it.time}}<v-icon small>
                     call_made
-                </v-icon> 
+                </v-icon>
+                </span>
             </div>
         </v-flex>
         <v-flex xs12 style="margin-top: 2em">

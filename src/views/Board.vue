@@ -25,12 +25,12 @@
                         </v-flex>
                         <v-flex xs8
                                 style="height: 100%;display: flex;justify-content: center;flex-direction: column;text-align: left">
-                            <div style="height: 25%;display: flex;align-items: center;"><h2 style="overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">{{item.title}}</h2></div>
-                            <div style="height: 25%;display: flex;align-items: center;overflow: hidden"><h4 style="overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">
+                            <div style="height: 34%;display: flex;align-items: center;"><h2 style="overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">{{item.title}}</h2></div>
+                            <div style="height: 30%;display: flex;align-items: center;overflow: hidden"><h4 style="overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">
                                 {{item.content}}</h4></div>
-                            <div style="height: 25%;display: flex;align-items: center;"><h4>发布单位：<span
+                            <div style="height: 18%;display: flex;align-items: center;"><h4>发布单位：<span
                                     style="color: blue;">{{item.nickname}}</span></h4></div>
-                            <div style="height: 25%;display: flex;align-items: center;"><h4>
+                            <div style="height: 18%;display: flex;align-items: center;"><h4>
                                 <span v-for="(tag, index) in item.tags" :key="index">{{ index===0 ? '' : '/' }}{{ tag.text }}</span>
                             </h4>
                             </div>
@@ -72,7 +72,7 @@
                     <Col span="14" offset="10">
                         <v-layout row>
                             <v-flex xs12 sm6 offset-sm3>
-                                <v-card>
+                                <v-card flat>
                                     <v-list two-line>
 
                                         <!--<v-list-tile-->
@@ -169,14 +169,6 @@
                         value: '水处理技术',
                         label: '水处理技术'
                     },
-                    {
-                        value: '还有啥忘了',
-                        label: '还有啥忘了'
-                    },
-                    {
-                        value: '再凑一个',
-                        label: '再凑一个'
-                    }
                 ],
                 model11: '',
                 model12: [],
@@ -230,8 +222,13 @@
                 this.busy = true;
                 this.get_board_recommend()
             },
-        }
-        ,
+        },
+        deactivated() {
+            this.busy = true;
+        },
+        activated() {
+            this.busy = false;
+        },
         mounted() {
             this.get_tag_tree();
         },
@@ -259,4 +256,13 @@
     .load-more-hide {
         height: 0;
     }
+    /*.elevation-12{*/
+        /*box-shadow: none !important;*/
+    /*}*/
+    /*.elevation-2{*/
+        /*box-shadow: none !important;*/
+    /*}*/
+    /*.v-card{*/
+        /*box-shadow: none !important;*/
+    /*}*/
 </style>

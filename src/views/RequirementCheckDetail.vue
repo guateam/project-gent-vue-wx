@@ -69,6 +69,18 @@
                     <span v-else style="color: blue">收起</span>
                 </button>
             </p>
+            <v-layout>
+                <v-container>
+                    <v-flex sx6>
+                        <v-btn block color="primary" @click="$router.push({name:'group-chat',params:{ id:data.group, title: data.title}})">跳转附属群
+                        </v-btn>
+                    </v-flex>
+                    <v-flex sx6>
+                        <v-btn block color="blue" @click="change_state()">{{demand_state}}
+                        </v-btn>
+                    </v-flex>
+                </v-container>
+            </v-layout>
         </div>
         <v-divider></v-divider>
         <div style="padding: 1em;line-height: 1.5;border-bottom: 1px #eee solid">
@@ -106,9 +118,9 @@ height: 100%;border-radius: 50%">
                 <!--动态-->
                 <v-tab-item :key="'待审核'">
                     <v-layout row wrap
-                              style="margin-bottom: 2em;border-bottom: 1px #eee solid" v-for="item in users"
+                              style="margin-bottom: 2em;border-bottom: 1px #eee solid;margin-top: 1em" v-for="item in users"
                               v-if="item.state===0">
-                        <v-flex xs3>
+                        <v-flex xs3 @click="$router.push({name:'detail',query:{id:item.userID}})">
                             <div style="width: 65px;height: 65px;overflow:hidden;border-radius: 50%">
                                 <img :src="item.headportrait" alt="" style="width: 100%;
 height: 100%;border-radius: 50%">
@@ -139,9 +151,9 @@ height: 100%;border-radius: 50%">
                 <!--回答-->
                 <v-tab-item :key="'已审核'">
                     <v-layout row wrap
-                              style="margin-bottom: 2em;border-bottom: 1px #eee solid" v-for="item in users"
+                              style="margin-bottom: 2em;border-bottom: 1px #eee solid;margin-top: 1em;" v-for="item in users"
                               v-if="item.state===1">
-                        <v-flex xs3>
+                        <v-flex xs3 @click="$router.push({name:'detail',query:{id:item.userID}})">
                             <div style="width: 65px;height: 65px;overflow:hidden;border-radius: 50%">
                                 <img :src="item.headportrait" alt="" style="width: 100%;
 height: 100%;border-radius: 50%">
@@ -172,9 +184,9 @@ height: 100%;border-radius: 50%">
                 <!--专栏-->
                 <v-tab-item :key="'已拒绝'">
                     <v-layout row wrap
-                              style="margin-bottom: 2em;border-bottom: 1px #eee solid" v-for="item in users"
+                              style="margin-bottom: 2em;border-bottom: 1px #eee solid;margin-top: 1em" v-for="item in users"
                               v-if="item.state===-1">
-                        <v-flex xs3>
+                        <v-flex xs3 @click="$router.push({name:'detail',query:{id:item.userID}})">
                             <div style="width: 65px;height: 65px;overflow:hidden;border-radius: 50%">
                                 <img :src="item.headportrait" alt="" style="width: 100%;
 height: 100%;border-radius: 50%">
@@ -215,14 +227,14 @@ height: 100%;border-radius: 50%">
                 showAll_two: false,
                 showAll_three: false,
                 data: {
-                    title: 'SCgirl电竞联盟招收新成员',
-                    nickname: 'SCgirl电竞',
+                    title: '加载中',
+                    nickname: '加载中',
                     usergroup: {
                         text: '企业'
                     },
                     level: 0,
-                    description: '250w猛男指定认证账号，一切战术转换家，没有智力只会莽',
-                    content: 'APM250+，韩总及以上水平，没有智力视力不好及爱好女装可优先考虑',
+                    description: '加载中...',
+                    content: '加载中...',
                     read: 0,
                     cover: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551871818376&di=23a06b4313b4716598c3448d8803049e&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F3c6d55fbb2fb431690697fb32aa4462308f7d381.jpg',
                     head_portrait: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1551871796439&di=b76ea1eec37f57c40181636afbe7d303&imgtype=0&src=http%3A%2F%2Fpic.51yuansu.com%2Fpic3%2Fcover%2F01%2F69%2F80%2F595f67c2239cb_610.jpg',
@@ -234,7 +246,8 @@ height: 100%;border-radius: 50%">
                 state: ['被清除', '招标中', '项目开始', '项目结束'],
                 sign: -2,
                 users: [],
-                user_state: ['被拒绝', '待审核', '已通过']
+                user_state: ['被拒绝', '待审核', '已通过'],
+                demand_state: '停止招标，开始项目'
             }
         },
         methods: {
@@ -242,6 +255,14 @@ height: 100%;border-radius: 50%">
                 this.$api.board.get_demand(id).then(res => {
                     if (res.data.code === 1) {
                         this.data = res.data.data;
+                        switch (this.data.state) {
+                            case 0:
+                                this.demand_state = '停止招标，开始项目';
+                                break;
+                            case 1:
+                                this.demand_state = '确认项目结束';
+                                break;
+                        }
                     }
                 })
             },
@@ -272,6 +293,21 @@ height: 100%;border-radius: 50%">
                         this.get_signed_users();
                     }
                 })
+            },
+            change_state() {
+                if (this.data.state === 0) {
+                    this.$api.enterprise.start_demand(this.$route.query.id).then(res => {
+                        if (res.data.code === 1) {
+                            this.get_demand(this.$route.query.id);
+                        }
+                    })
+                } else if (this.data.state === 1) {
+                    this.$api.enterprise.close_demand(this.$route.query.id).then(res => {
+                        if (res.data.code === 1) {
+                            this.get_demand(this.$route.query.id);
+                        }
+                    })
+                }
             }
         },
         mounted() {

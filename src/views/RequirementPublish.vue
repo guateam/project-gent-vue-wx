@@ -85,7 +85,6 @@
         </div>
         <v-dialog
                 v-model="busy"
-                hide-overlay
                 persistent
                 width="300"
         >
@@ -253,6 +252,7 @@
                             that.$router.back();
                         } else {
                             this.$store.commit('showInfo', res.data.msg);
+                            this.busy = false;
                         }
                     })
 

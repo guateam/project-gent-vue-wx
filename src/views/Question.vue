@@ -9,7 +9,8 @@
                 <span>话题</span>
             </v-toolbar-title>
 
-            <v-btn icon>
+            <v-btn icon @click="edit">
+                <!--<v-icon v-if="$store.state.userInfo.level>=5&&user_id==$store.state.userInfo.user_id">edit</v-icon>-->
                 <v-icon>search</v-icon>
             </v-btn>
         </v-toolbar>
@@ -21,7 +22,10 @@
                     <div style="flex: 0 0 70%">
                         <p>标签 : <span v-for="(tag, index) in questionData.tags" :key="index">{{tag.text}} </span></p>
                         <p><span> {{questionData.follow}} </span>人关注&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;&nbsp;<span>{{questionData.commentsNum}} </span>
-                            条评论 </p>
+                            条评论
+                            <span v-if="question_type!==0"
+                                  style="color: #4CAF50">&nbsp;&nbsp;&nbsp;悬赏价格：￥{{price}}</span>
+                        </p>
                     </div>
                     <div :class="{attention:!isfollowed,followed:isfollowed}" style="flex: 0 0 30%" @click="follow()">
                         {{followNotice}}
@@ -48,8 +52,7 @@
 
         <!--页面主体，展示不同的回答列表-->
 
-        <v-card v-for="(answer, index) in answersDataList" :key="index"
-                :to="{name: 'answer', query: {redirect: $route.fullPath, id: answer.answerID}}">
+        <v-card v-for="(answer, index) in answersDataList" :key="index" v-if="paid">
             <div style="padding-left: 1em; padding-right: 1em;padding-bottom: 1em">
 
                 <router-link :to="{name: 'answer', query: {redirect: $route.fullPath, id: answer.answerID}}">
@@ -61,7 +64,8 @@
 
                     <!--没有图片时不加载下面的div-->
                     <div class="answerImg" v-if="answer.image.length >=3">
-                        <img v-for="(item,x) in answer.image" :key="x" v-if="x<3" :src="item" alt=""/>
+                        <img style="object-fit: cover" v-for="(item,x) in answer.image" :key="x" v-if="x<3" :src="item"
+                             alt=""/>
                     </div>
                     <div class="answerImg" v-if="answer.image.length === 1">
                         <img :src="answer.image[0]" alt="" style="width: 100%;object-fit: cover;"/>
@@ -71,17 +75,28 @@
                         <img :src="answer.image[1]" alt="" style="width: 50%;object-fit: cover;"/>
                     </div>
                 </router-link>
-                <div style="width: 100%;display: flex;align-items: center;position: relative;">
+                <div style="width: 100%;display: flex;align-items: center;position: relative;margin-top: 1em"
+                     @click="$router.push({name:'detail',query:{id:answer.userID}})">
                     <div class="userhead">
-                        <img :src="answer.headportrait" alt="" style="width: 100%">
+                        <img :src="answer.headportrait" alt="" style="width: 100%;object-fit: cover;">
                     </div>
-                    <p class="userName">{{answer.nickname}}</p>
+                    <p class="userName" style="margin-left: 0.5em">{{answer.nickname}}</p>
                     &nbsp;&nbsp;&nbsp;&nbsp;
                     <p class="like">点赞: {{answer.agree}} 反对: {{ answer.disagree }}</p>
                     <!--<p class="userTag">{{answer.user.tag}}</p>-->
                     <p class="answerTime">{{answer.edittime}}</p>
                 </div>
+                <div style="width: 100%;display: flex;align-items: center;position: relative;margin-top: 1em">
+                    <v-btn block v-if="user_id===$store.state.userInfo.user_id &&(!adopt)&&question_type!==0"
+                           color="success"
+                           @click="adopt_answer(answer.answerID)">采纳回答
+                    </v-btn>
+                </div>
             </div>
+        </v-card>
+        <v-card v-if="!paid" style="text-align: center;align-items: center;">
+            <h2 style="margin-top: 1em;padding-top: 1em;">本问题是付费问题，请付费后查看</h2>
+            <v-btn color="info" @click="confirm_pay" style="margin-top: 1em;">支付￥{{price*0.05.toFixed(2)}}</v-btn>
         </v-card>
         <div class="bottom"></div>
 
@@ -95,6 +110,7 @@
                     right
                     color="accent"
                     @click="$router.push({name:'answer-publish',query:{redirect: $route.fullPath, id:$route.query.id}})"
+                    v-if="$store.state.userInfo.level>=1"
             >
                 <v-icon>add</v-icon>
             </v-btn>
@@ -109,6 +125,44 @@
         <!--END-->
 
         <!--底部为添加按钮留出空间，防止遮挡内容-->
+        <v-dialog
+                v-model="dialog"
+                width="500"
+        >
+            <v-card>
+                <v-card-title
+                        class="headline grey lighten-2"
+                        primary-title
+                        color="primary"
+                >
+                    确认支付
+                </v-card-title>
+
+                <v-card-text>
+                    你确定支付￥{{price*0.05.toFixed(2)}}元来查看回答吗？
+                </v-card-text>
+
+                <v-divider></v-divider>
+
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                            color="warning"
+                            flat
+                            @click="dialog = false"
+                    >
+                        取消
+                    </v-btn>
+                    <v-btn
+                            color="success"
+                            flat
+                            @click="pay_question"
+                    >
+                        确定
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
         <v-footer app>
             <bottomNav :bottom-nav="'topic'"></bottomNav>
         </v-footer>
@@ -129,22 +183,28 @@
                 isfollowed: false,
                 followNotice: '+关注话题',
                 questionData: {
-                    title: '刚刚研制成功的世界首台分辨力最高紫外超分辨光刻装备意味着什么？对国内芯片行业有何影响？',  // 问题标题
-                    tags: ['新闻', '芯片'],  // 标签
-                    follow: '22222',  // 关注人数
-                    commentsNum: '333',  // 评论数量
-                    content: '新闻资讯军报记者成都11月29日电（吕珍慧、记者邹维荣）国家重大科研装备研制项目“超...',  // 内容
+                    title: '加载中的标题...',  // 问题标题
+                    tags: [],  // 标签
+                    follow: '加载中',  // 关注人数
+                    commentsNum: '加载中',  // 评论数量
+                    content: '加载中的内容...',  // 内容
                 },
-                answerNum: "123",  // 回答的数量
+                answerNum: "加载中",  // 回答的数量
                 answersDataList: [
                     {
-                        content: '先回答大家最关心的两个问题:2、不吹不黑，这个装备真的这么厉害吗，还是只是吹牛？答：确实很厉害。',
-                        nickname: '看风景',  // 用户昵称
-                        edittime: '2小时前',  // 回答时间
-                        agree: '233',  // 点赞
+                        content: '加载中的回答...',
+                        nickname: '加载中',  // 用户昵称
+                        edittime: '加载中',  // 回答时间
+                        agree: '加载中',  // 点赞
                         commentsNum: '',  //评论数量
                     },
                 ],  // 答案列表
+                question_type: 0,
+                paid: true,
+                price: 0,
+                dialog: false,
+                user_id: '',
+                adopt: false
             }
         },
         methods: {
@@ -154,20 +214,43 @@
             // },
             getAnswers(questionID) {
                 // 获取答案信息
-                this.$api.questions.get_answer_list(questionID).then((response) => {
-                    // console.log(response.data.data);
-                    let data = response.data.data;
-                    data.forEach((value) => {
-                        let image = value.image;
-                        let x = [];
-                        image.forEach((img) => {
-                            x.push(img.split('src="')[1].split('"')[0])
+                if (this.question_type === 0) {
+                    this.$api.questions.get_answer_list(questionID).then((response) => {
+                        // console.log(response.data.data);
+                        let data = response.data.data;
+                        data.forEach((value) => {
+                            let image = value.image;
+                            let x = [];
+                            image.forEach((img) => {
+                                x.push(img.split('src="')[1].split('"')[0])
+                            });
+                            value.image = x;
                         });
-                        value.image = x;
+                        this.answersDataList = data;
+                        this.answerNum = response.data.data.length;
                     });
-                    this.answersDataList = data;
-                    this.answerNum = response.data.data.length;
-                });
+                } else {
+                    this.$api.questions.get_priced_answer_list(questionID).then(res => {
+                        if (res.data.code === 1) {
+                            let data = res.data.data;
+                            data.forEach((value) => {
+                                let image = value.image;
+                                let x = [];
+                                image.forEach((img) => {
+                                    x.push(img.split('src="')[1].split('"')[0])
+                                });
+                                value.image = x;
+                                if (value.answertype === 2) {
+                                    this.adopt = true;
+                                }
+                            });
+                            this.answersDataList = data;
+                            this.answerNum = res.data.data.length;
+                        } else if (res.data.code === 0) {
+                            this.paid = false;
+                        }
+                    })
+                }
             },
             getQuestion(questionID) {
                 this.$api.questions.get_question(questionID).then((response) => {
@@ -179,7 +262,37 @@
                     this.questionData.follow = data.follow;
                     this.questionData.commentsNum = data.comment;
                     //this.questionData.tags=data.tags;
+                    this.question_type = data.question_type;
+                    this.price = data.price;
+                    this.answerNum = data.answer;
+                    this.user_id = data.user_id;
+                    this.getAnswers(questionID);
                 });
+            },
+            pay_question() {
+                this.$api.questions.pay_question(this.$route.query.id).then(res => {
+                    if (res.data.code === 1) {
+                        this.getAnswers(this.$route.query.id);
+                        this.paid = true;
+                    } else if (res.data.code === -1) {
+                        this.$store.commit('showInfo', '余额不足，请充值！');
+                    } else {
+                        this.$store.commit('showInfo', res.data.msg);
+                    }
+                    this.dialog = false;
+                })
+            },
+            confirm_pay() {
+                this.dialog = true;
+            },
+            adopt_answer(answer_id) {
+                this.$api.questions.adopt_answer(answer_id).then(res => {
+                    if (res.data.code === 1) {
+                        this.adopt = true;
+                    } else {
+                        this.$store.commit('showInfo', res.data.msg);
+                    }
+                })
             },
             follow() {
                 if (!this.isfollowed) {
@@ -188,6 +301,14 @@
                             this.isfollowed = true;
                             this.followNotice = '已关注';
                             this.questionData.follow++;
+                        }
+                    })
+                } else {
+                    this.$api.questions.un_follow_question(this.$route.query.id).then(res => {
+                        if (res.data.code === 1) {
+                            this.isfollowed = false;
+                            this.followNotice = '+关注话题';
+                            this.questionData.follow--;
                         }
                     })
                 }
@@ -206,14 +327,25 @@
                         return 0;
                     }
                 })
+            },
+            set_exp_change() {
+                this.$api.account.set_exp_change(1, '浏览话题').then(res => {
+
+                })
+            },
+            edit() {
+                // if (this.user_id == this.$store.state.userInfo.user_id) {
+                //     this.$router.push({name: 'question-edit', query: {id: this.$route.query.id}})
+                // }
+                this.$router.push({name: 'search'})
             }
         },
         mounted() {
             const id = this.$route.query.id;
-            this.getAnswers(id);
             this.getQuestion(id);
             this.get_follow(id);
             this.add_user_action(id);
+            this.set_exp_change();
         },
     }
 </script>
@@ -391,6 +523,5 @@
 
     img {
         max-width: 100%;
-        object-fit: cover;
     }
 </style>

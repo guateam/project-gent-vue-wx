@@ -26,28 +26,28 @@
                     <v-flex xs3 style="align-items: center;justify-content: space-between;flex-direction: column"
                             @click="$router.push({name:'historical-post'})">
                         <div>
-                            <v-icon large color="#99FF00">event_note</v-icon>
+                            <v-icon large color="white" style="background-color:rgb(76,175,80); padding:7px;   border-radius:50px">event_note</v-icon>
                         </div>
                         <div style="margin-top: 5px">回答管理</div>
                     </v-flex>
                     <v-flex xs3 style="align-items: center;justify-content: space-between;flex-direction: column"
                             @click="$router.push({name:'historical-post'})">
                         <div>
-                            <v-icon large color="#99FFFF">library_books</v-icon>
+                            <v-icon large color="white" style="background-color:#FF7F00; padding:7px; border-radius:50px">library_books</v-icon>
                         </div>
                         <div style="margin-top: 5px">文章管理</div>
                     </v-flex>
                     <v-flex xs3 style="align-items: center;justify-content: space-between;flex-direction: column"
                             @click="$router.push({name: 'fan-list', query: {active: 1}})">
                         <div>
-                            <v-icon large color="#FF3300">people</v-icon>
+                            <v-icon large color="white" style="background-color:#B0C4DE; padding:7px; border-radius:50px">people</v-icon>
                         </div>
                         <div style="margin-top: 5px">粉丝管理</div>
                     </v-flex>
                     <v-flex xs3 style="align-items: center;justify-content: space-between;flex-direction: column"
                             @click="$router.push({name: 'message'})">
                         <div>
-                            <v-icon large color="#CC66CC">question_answer</v-icon>
+                            <v-icon large color="white" style="background-color:#9F79EE; padding:7px; border-radius:50px">question_answer</v-icon>
                         </div>
                         <div style="margin-top: 5px">互动管理</div>
                     </v-flex>
@@ -55,15 +55,15 @@
                 <v-layout row wrap>
                     <v-flex xs3 style="align-items: center;justify-content: space-between;flex-direction: column" @click="$router.push({name:'advisory-list'})">
                         <div>
-                            <v-icon large color="#FFFF33">access_time</v-icon>
+                            <v-icon large color="white" style="background-color:#FF6347; padding:7px; border-radius:50px">watch_later</v-icon>
                         </div>
                         <div style="margin-top: 5px">咨询管理</div>
                     </v-flex>
                     <v-flex xs3 style="align-items: center;justify-content: space-between;flex-direction: column">
                         <div>
-                            <v-icon large color="#6699FF"
-                                    @click="$router.push({name:'wallet', query: {redirect: $route.fullPath}})">
-                                account_balance_wallet
+                            <v-icon large color="white"
+                                    @click="$router.push({name:'wallet', query: {redirect: $route.fullPath}})" style="background-color:rgb(130,177,255); padding:7px; border-radius:50px">
+                                account_balance_wallet 
                             </v-icon>
                         </div>
                         <div style="margin-top: 5px">创作收益</div>
@@ -94,8 +94,8 @@
             <v-container grid-list-md text-xs-center>
                 <v-layout row wrap>
                     <v-flex xs4 style="align-items: center;flex-direction: column;border-right: 1px solid #eee">
-                        <div style="margin-top: 5px">粉丝</div>
-                        <div style="margin-top: 5px">{{click.fan}}</div>
+                        <div style="margin-top: 5px;font-weight:600;font-size:1.5em;">{{click.fan}}</div>
+                        <div style="margin-top: 5px;" >粉丝</div>
                         <!--<div style="margin-top: 5px;color: #FF0033">-->
                         <!--<v-icon large color="#FF0033" small>-->
                         <!--keyboard_arrow_up-->
@@ -104,8 +104,8 @@
                         <!--</div>-->
                     </v-flex>
                     <v-flex xs4 style="align-items: center;flex-direction: column;border-right: 1px solid #eee">
+                        <div style="margin-top: 5px;font-weight:600;font-size:1.5em;">{{click.answer_read}}</div>
                         <div style="margin-top: 5px">回答浏览</div>
-                        <div style="margin-top: 5px">{{click.answer_read}}</div>
                         <!--<div style="margin-top: 5px;color: #99FF00">-->
                         <!--<v-icon large color="#99FF00" small>-->
                         <!--keyboard_arrow_down-->
@@ -114,8 +114,8 @@
                         <!--</div>-->
                     </v-flex>
                     <v-flex xs4 style="align-items: center;flex-direction: column">
+                        <div style="margin-top: 5px;font-weight:600;font-size:1.5em;">{{click.article_read}}</div>
                         <div style="margin-top: 5px">文章阅读</div>
-                        <div style="margin-top: 5px">{{click.article_read}}</div>
                         <!--<div style="margin-top: 5px;color: #99FF00">-->
                         <!--<v-icon large color="#99FF00" small>-->
                         <!--keyboard_arrow_down-->
@@ -127,8 +127,8 @@
                 <v-divider></v-divider>
                 <v-layout row wrap>
                     <v-flex xs4 style="align-items: center;flex-direction: column;border-right: 1px solid #eee">
+                        <div style="margin-top: 5px;font-weight:600;font-size:1.5em;">{{click.agree}}</div>
                         <div style="margin-top: 5px">点赞</div>
-                        <div style="margin-top: 5px">{{click.agree}}</div>
                         <!--<div style="margin-top: 5px;color: #FF0033">-->
                         <!--<v-icon large color="#FF0033" small>-->
                         <!--keyboard_arrow_up-->
@@ -137,8 +137,8 @@
                         <!--</div>-->
                     </v-flex>
                     <v-flex xs4 style="align-items: center;flex-direction: column;border-right: 1px solid #eee">
+                        <div style="margin-top: 5px;font-weight:600;font-size:1.5em;">{{click.collect}}</div>
                         <div style="margin-top: 5px">收藏</div>
-                        <div style="margin-top: 5px">{{click.collect}}</div>
                         <!--<div style="margin-top: 5px;color: #99FF00">-->
                         <!--<v-icon large color="#99FF00" small>-->
                         <!--keyboard_arrow_down-->
@@ -147,8 +147,8 @@
                         <!--</div>-->
                     </v-flex>
                     <v-flex xs4 style="align-items: center;flex-direction: column">
+                        <div style="margin-top: 5px;font-weight:600;font-size:1.5em;">{{click.pay}}</div>
                         <div style="margin-top: 5px">收入</div>
-                        <div style="margin-top: 5px">{{click.pay}}</div>
                         <!--<div style="margin-top: 5px;color: #99FF00">-->
                         <!--<v-icon large color="#99FF00" small>-->
                         <!--keyboard_arrow_down-->
@@ -246,6 +246,8 @@
         position: absolute;
         bottom: 0;
         width: 100%;
+        height:30px;
+        padding-top: 3px;
         background: rgba(0, 0, 0, 0.5);
         text-align: center;
         font-size: 1.3em;

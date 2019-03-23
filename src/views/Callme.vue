@@ -18,14 +18,14 @@ height: 100%;border-radius: 50%"
                 </div>
             </v-flex>
             <v-flex xs9 style="padding: 0.5em 1em;">
-                <div style="display: flex;align-items: center;"><b class="nickname">任豚</b><span
-                        class="board">专家lv.2</span>
+                <div style="display: flex;align-items: center;"><b class="nickname"></b><span
+                        class="board"></span>
                 </div>
                 <h4 class="topicdetail" style="margin-top: 0.5em">
-                    @ <span style="color: lightskyblue;">拉拉人</span>：<span>只狼天下第一</span>
+                    @ <span style="color: lightskyblue;"></span>：<span></span>
                 </h4>
                 <p class="topicdetail" style="margin-top: 5px;float:right;">
-                    <span>21：22</span>
+                    <span></span>
                     <!--<span @click="$router.push({name:'comment-detail'})"-->
                     <!--style="margin-left: 1.5em;color: #66ccff;font-size: 1.3em">查看对话</span>-->
                     <!--<v-icon style="float:right;margin-right:1em">thumb_up</v-icon>-->
@@ -44,16 +44,16 @@ height: 100%;border-radius: 50%"
 
 <style scoped>
     .head {
-        z-index: 400;
-        width: 100%;
-        height: 50px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        position: fixed;
-        margin-bottom: 1em;
-        background-color: #ffd633;
-    }
+         z-index: 400;
+         width: 100%;
+         height: 50px;
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+         position: fixed;
+         margin-bottom: 1em;
+         background-color: #ffd633;
+     }
 
     .line {
         z-index: 400;

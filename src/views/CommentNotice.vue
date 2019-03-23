@@ -19,13 +19,13 @@ height: 100%;border-radius: 50%"
             </v-flex>
             <v-flex xs9 style="padding: 0.5em 1em;">
                 <div style="display: flex;align-items: center;"><b class="nickname">任豚</b><span
-                        class="board">专家lv.2</span><span style="color: lightskyblue;margin-left: 1.2em">21:11</span>
+                        class="board"></span><span style="color: lightskyblue;margin-left: 1.2em">21:11</span>
                 </div>
                 <h4 class="topicdetail" style="margin-top: 0.5em">
-                    评论了你：<span>只狼天下第一</span>
+                    <span></span>
                 </h4>
                 <p class="topicdetail" style="margin-top: 5px;color: gray">
-                    <span>没有只狼玩我要死了没有只狼玩我要死了没有只狼玩我要死了没有只狼玩我要死了没有只狼玩我要死了没有只狼玩我要死了没有只狼玩我要死了没有只狼玩我要死了...</span>
+                    <span></span>
                     <!--<span @click="$router.push({name:'comment-detail'})"-->
                     <!--style="margin-left: 1.5em;color: #66ccff;font-size: 1.3em">查看对话</span>-->
                     <!--<v-icon style="float:right;margin-right:1em">thumb_up</v-icon>-->

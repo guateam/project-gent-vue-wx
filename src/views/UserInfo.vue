@@ -7,9 +7,9 @@
                 <span>{{ title }}</span>
             </v-toolbar-title>
 
-            <!--<v-btn :to="{name: 'settings', query: {redirect: this.$route.fullPath}}" icon>-->
-                <!--<v-icon>settings</v-icon>-->
-            <!--</v-btn>-->
+            <v-btn :to="{name: 'settings', query: {redirect: this.$route.fullPath}}" icon>
+                <v-icon>settings</v-icon>
+            </v-btn>
         </v-toolbar>
         <v-card color="primary" flat>
             <v-container>
@@ -17,8 +17,9 @@
                     <v-flex offset-xs1 grow>
                         <v-layout align-center>
                             <v-flex shrink>
-                                <v-avatar id="avatar" size="70" @click="$router.push({name:'detail',query:{id:$store.state.userInfo.user_id}})">
-                                    <img :src="$store.state.userInfo.head_portrait" alt="" style="object-fit: cover">
+                                <v-avatar id="avatar" size="70"
+                                          @click="$router.push({name:'detail',query:{id:$store.state.userInfo.user_id}})">
+                                    <img style="object-fit: cover" :src="$store.state.userInfo.head_portrait" alt="">
                                 </v-avatar>
                             </v-flex><!--头像-->
 
@@ -152,7 +153,7 @@
 
                     <v-divider></v-divider>
 
-                    <v-list-tile>
+                    <v-list-tile @click="$router.push({name:'recharge'})">
                         <v-list-tile-action>
                             <v-icon class="time--text">attach_money</v-icon>
                         </v-list-tile-action>

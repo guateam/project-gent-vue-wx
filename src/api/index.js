@@ -33,10 +33,26 @@ const index = {
     },
     account: {
 
+        update_password(account, psw) {
+            return axios.get(`${base.account}/update_password`, {params: {account: account, password: psw}})
+        },  // 设置新密码
+
+        send_check_code(account) {
+            return axios.get(`${base.account}/send_check_code`, {params: {account: account}})
+        },  // 发送验证码
+        send_check_code_2(account, aim) {
+            return axios.get(`${base.account}/send_check_code`, {params: {account: account, aim: aim}})
+        },  // 发送验证码,验证码修改数据库的用户和发送的设备不一致时（手机绑定邮箱或邮箱绑定手机）
+        check_code(account, code) {
+            return axios.get(`${base.account}/check_code`, {params: {account: account, check_code: code}})
+        },  // 检查验证码
+
         login(data) {
             return axios.post(`${base.account}/login`, qs.stringify(data))
         },  // 用户登录
-
+        login_by_message(code, account) {
+            return axios.get(`${base.account}/check_code_login`, {params: {account: account, code: code}})
+        },
         register(data) {
             return axios.post(`${base.account}/register`, qs.stringify(data))
         },  // 用户注册
@@ -100,6 +116,35 @@ const index = {
         },  // 获取用户文章
         set_account_info(data) {
             return axios.post(`${base.account}/set_account_info`, qs.stringify(data))
+        },
+        bind_phonenumber(phonenumber) {
+            return axios.get(`${base.account}/bind_phonenumber`, {
+                params: {
+                    token: store.state.token,
+                    phonenumber: phonenumber
+                }
+            })
+        },
+        bind_email(email) {
+            return axios.get(`${base.account}/bind_email`, {params: {token: store.state.token, email: email}})
+        },
+        recharge(data) {
+            return axios.post(`${base.account}/add_account_balance`, qs.stringify(data))
+        },  //充值
+        checkout() {
+            return axios.post(`${base.account}/add_account_balance`, qs.stringify(data))
+        },  //提现
+        set_verify_info(data) {
+            return axios.post(`${base.account}/set_verify_info`, qs.stringify(data))
+        },
+        set_exp_change(value, description, token = store.state.token) {
+            return axios.get(`${base.account}/set_exp_change`, {
+                params: {
+                    value: value,
+                    description: description,
+                    token: token
+                }
+            })
         }
     },
     message: {
@@ -149,7 +194,9 @@ const index = {
         follow_question(id, token = store.state.token) {
             return axios.get(`${base.questions}/follow_question`, {params: {question_id: id, token: token}})
         },  // 关注问题
-
+        un_follow_question(id, token = store.state.token) {
+            return axios.get(`${base.questions}/un_follow_question`, {params: {question_id: id, token: token}})
+        },  // 取消关注问题
         get_follow(id, token = store.state.token) {
             return axios.get(`${base.questions}/get_follow`, {params: {question_id: id, token: token}})
         },  // 判断是否已关注
@@ -173,6 +220,20 @@ const index = {
                 content: content
             };
             return axios.post(`${base.questions}/add_question_comment`, qs.stringify(data))
+        },
+        get_priced_answer_list(question_id, token = store.state.token) {
+            return axios.get(`${base.questions}/get_priced_answer_list`, {
+                params: {
+                    question_id: question_id,
+                    token: token
+                }
+            })
+        },
+        pay_question(question_id, token = store.state.token) {
+            return axios.get(`${base.questions}/pay_question`, {params: {question_id: question_id, token: token}})
+        },
+        adopt_answer(answer_id, token = store.state.token) {
+            return axios.get(`${base.questions}/adopt_answer`, {params: {answer_id: answer_id, token: token}})
         }
     },
     school: {
@@ -294,6 +355,18 @@ const index = {
         },
         add_order(data) {
             return axios.post(`${base.specialist}/add_order`, qs.stringify(data))
+        },
+        get_order_list(token = store.state.token) {
+            return axios.get(`${base.specialist}/get_order_list`, {params: {token: token}})
+        },
+        get_order(order_id, token = store.state.token) {
+            return axios.get(`${base.specialist}/get_order`, {params: {order_id: order_id, token: token}})
+        },
+        confirm_order(data) {
+            return axios.post(`${base.specialist}/confirm_order`, qs.stringify(data))
+        },
+        refuse_order(order_id, token = store.state.token) {
+            return axios.get(`${base.specialist}/refuse_order`, {params: {order_id: order_id, token: token}})
         }
     },
     activities: {
@@ -308,8 +381,8 @@ const index = {
         get_child_tag(tag_id) {
             return axios.get(`${base.tags}/get_child_tag`, {params: {tag_id: tag_id}})
         },
-        get_tag_recommend(tag_id, tag) {
-            return axios.get(`${base.tags}/get_tag_recommend`, {params: {tag_id: tag_id, tag: tag}})
+        get_tag_recommend(tag_id, tag, token = store.state.token) {
+            return axios.get(`${base.tags}/get_tag_recommend`, {params: {tag_id: tag_id, tag: tag, token: token}})
         },
         add_tag(father, tag, tag_type) {
             let data = {
@@ -325,14 +398,30 @@ const index = {
         }
     },
     upload: {
-        upload_picture(picture) {
-            return axios.get(`${base.upload}/upload_picture`, {params: {picture: picture}})
+        upload_picture(formData) {
+            return axios.post(`${base.upload}/upload_picture`, formData)
         }
     },
     group: {
         get_groups(token = store.state.token) {
             return axios.get(`${base.group}/get_groups`, {params: {token: token}})
-        }
+        },
+
+        get_group_message(id) {
+            return axios.get(`${base.group}/get_group_message`, {params: {token: store.state.token, group_id: id}})
+        },  // 获取群聊信息
+
+        send_group_message(data) {
+            return axios.post(`${base.group}/send_group_message`, qs.stringify(data))
+        },  // 发送群聊信息
+
+        get_group_members(id) {
+            return axios.get(`${base.group}/get_group_members`, {params: {group_id: id}})
+        },  // 获取当前群成员
+
+        exit_group(id) {
+            return axios.get(`${base.group}/exit_group`, {params: {token: store.state.token, group_id: id}})
+        },  // 退出群聊
     },
     board: {
         get_board_recommend(page, token = store.state.token) {
@@ -349,7 +438,10 @@ const index = {
         },
         sign_to_demand(demand_id, token = store.state.token) {
             return axios.get(`${base.board}/sign_to_demand`, {params: {demand_id: demand_id, token: token}})
-        }
+        },
+        get_my_demand(token = store.state.token) {
+            return axios.get(`${base.board}/get_my_demand`, {params: {token: token}})
+        },
     },
     enterprise: {
         add_demand(data) {
@@ -387,6 +479,12 @@ const index = {
                     user_id: user_id
                 }
             })
+        },
+        start_demand(demand_id, token = store.state.token) {
+            return axios.get(`${base.enterprise}/start_demand`, {params: {demand_id: demand_id, token: token}})
+        },
+        close_demand(demand_id, token = store.state.token) {
+            return axios.get(`${base.enterprise}/close_demand`, {params: {demand_id: demand_id, token: token}})
         }
     },
     algorithm: {
@@ -406,6 +504,11 @@ const index = {
             }
             return axios.get(`${base.algorithm}/search`, {params: {word: word, type: type, token: token, page: page}})
         }, //模糊搜索
+    },
+    other: {
+        check_update() {
+            return axios.get(`${base.other}/check_update`)
+        }
     }
 };
 

@@ -19,12 +19,12 @@
                 </v-flex>
                 <v-flex xs8
                         style="height: 100%;display: flex;justify-content: center;flex-direction: column;text-align: left">
-                    <div style="height: 25%;display: flex;align-items: center;"><h2>{{item.title}}</h2></div>
-                    <div style="height: 25%;display: flex;align-items: center;overflow: hidden"><h4>
+                    <div style="height: 34%;display: flex;align-items: center;"><h2  style="overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">{{item.title}}</h2></div>
+                    <div style="height: 30%;display: flex;align-items: center;overflow: hidden"><h4 style="overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;">
                         {{item.content}}</h4></div>
-                    <div style="height: 25%;display: flex;align-items: center;"><h4>发布时间：<span
+                    <div style="height: 21%;display: flex;align-items: center;"><h4>发布时间：<span
                             style="color: blue;">{{item.createtime}}</span> 需求状态：{{state[item.state+1]}}</h4></div>
-                    <div style="height: 25%;display: flex;align-items: center;"><h4>
+                    <div style="height: 15%;display: flex;align-items: center;"><h4>
                         <span v-for="tag in item.tags">{{tag.text}} </span>
                     </h4>
                     </div>
@@ -60,6 +60,7 @@
                         this.data = [];
                         res.data.data.forEach(value => {
                             if (value.state === 0 || value.state === 1) {
+                                value['content'] = value['content'].replace(/<[^>]+>/g, '');
                                 this.data.push(value)
                             }
                         })

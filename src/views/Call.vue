@@ -15,7 +15,7 @@
 
           <v-flex shrink>
             <v-btn dark disabled icon>
-              <v-icon>arrow_back</v-icon>
+              <v-icon></v-icon>
             </v-btn>
           </v-flex>
         </v-layout>

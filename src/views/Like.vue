@@ -18,14 +18,14 @@ height: 100%;border-radius: 50%"
                 </div>
             </v-flex>
             <v-flex xs9 style="padding: 0.5em 1em;">
-                <div style="display: flex;align-items: center;"><b class="nickname">任豚</b><span
+                <div style="display: flex;align-items: center;"><b class="nickname">加载中</b><span
                         class="board">专家lv.2</span>
                 </div>
                 <p class="topicdetail" style="margin-top: 0.5em">
-                    赞了你的回答<span>没有只狼玩我要死了没有只狼玩我要死了没有只狼玩我要死了没有只狼玩我要死了没有只狼玩我要死了没有只狼玩我要死了没有只狼玩我要死了没有只狼玩我要死了...</span>
+                    赞了你的回答<span>加载中...</span>
                 </p>
                 <p class="topicdetail" style="margin-top: 5px;float:right;">
-                    <span>21：22</span>
+                    <span></span>
                     <!--<span @click="$router.push({name:'comment-detail'})"-->
                     <!--style="margin-left: 1.5em;color: #66ccff;font-size: 1.3em">查看对话</span>-->
                     <!--<v-icon style="float:right;margin-right:1em">thumb_up</v-icon>-->

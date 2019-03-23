@@ -24,7 +24,8 @@
                         <v-layout align-center justify-space-between row fill-height>
                             <!--头像-->
                             <v-flex xs6>
-                                <img class="avatar" :src="userInfo.avatar" style="width: 110px;height: 110px;border-radius: 50%;object-fit: cover">
+                                <img class="avatar" :src="userInfo.avatar"
+                                     style="width: 110px;height: 110px;border-radius: 50%;object-fit: cover">
                             </v-flex>
 
                             <v-flex xs6>
@@ -76,14 +77,16 @@
                         <v-layout align-center justify-center row fill-height>
                             <v-flex xs5>
                                 <v-btn @click="consult" block color="grey"
-                                       :disabled='user_group.value===0||user_group.value===2||user_group.value===3'>
+                                       :disabled='user_group==1||self'>
                 <span class="font-weight-bold white--text">
                   咨询
                 </span>
                                 </v-btn>
                             </v-flex>
                             <v-flex xs5 offset-xs1>
-                                <v-btn @click="followUser" block color="primary" :outline="userInfo.isFollow">
+                                <v-btn @click="followUser" block color="primary"
+                                       :outline="userInfo.isFollow"
+                                       :disabled="self">
                 <span class="font-weight-bold">
                   {{ userInfo.isFollow? '已关注': '+ 关注' }}
                 </span>
@@ -105,7 +108,7 @@
             <v-flex>
                 <v-tabs fixed-tabs>
                     <v-tab
-                            v-for="tab in ['话题', '回答', '专栏']"
+                            v-for="tab in ['话题', '回答', '文章']"
                             :key="tab"
                     >
                         {{ tab }}
@@ -218,24 +221,15 @@
                     desc: '这个人很懒，什么也没留下。',  // 简介
                 },  // 用户信息
                 message: [
-                    {title: '剪指甲的108种方法', subtitle: '发表文章', time: '1天前'},
-                    {title: '剪指甲的正确方式', subtitle: '赞同答案', time: '2天前'},
-                    {title: '修剪指甲的10种误区', subtitle: '收藏文章', time: '1个月前'},
-                    {title: '修剪指甲的10种误区', subtitle: '收藏文章', time: '1个月前'},
-                    {title: '修剪指甲的10种误区', subtitle: '收藏文章', time: '1个月前'},
-                    {title: '修剪指甲的10种误区', subtitle: '收藏文章', time: '1个月前'},
+                    {title: '加载中', subtitle: '发表文章', time: '1天前'},
                 ],  // 动态
                 answers: [],  // 回答
                 articles: [
-                    {title: '剪指甲的108种方法', subtitle: '说起修剪指甲，首先……', time: '2019-03-07'},
-                    {title: '剪指甲的108种方法', subtitle: '说起修剪指甲，首先……', time: '2019-03-07'},
-                    {title: '剪指甲的108种方法', subtitle: '说起修剪指甲，首先……', time: '2019-03-07'},
-                    {title: '剪指甲的108种方法', subtitle: '说起修剪指甲，首先……', time: '2019-03-07'},
-                    {title: '剪指甲的108种方法', subtitle: '说起修剪指甲，首先……', time: '2019-03-07'},
-                    {title: '剪指甲的108种方法', subtitle: '说起修剪指甲，首先……', time: '2019-03-07'},
+                    {title: '加载中', subtitle: '加载中..', time: '2019-03-07'},
                 ],  // 专栏文章
                 group: [],  // 用户组信息
-                user_group: {}
+                user_group: {},
+                self: false,
             }
         },
         methods: {
@@ -251,6 +245,7 @@
                     }  // 超过10秒认为加载失败
                 } while (this.group.length > 0 && this.userInfo.group !== '');
                 this.getMessage();
+                this.self = this.$route.query.id == this.$store.state.userInfo.user_id;
             },  // 初始化用户数据
             getMessage() {
                 this.message = [];
@@ -260,8 +255,8 @@
                     if (res.data.code === 1) {
                         res.data.data.forEach(value => {
                             this.message.push({
-                                title: value['title'],
-                                subtitle: value['description'],
+                                title: value['title'].replace(/<[^>]+>/g, ''),
+                                subtitle: value['description'].replace(/<[^>]+>/g, ''),
                                 time: this.get_date(value['edittime'])
                             })
                         })
@@ -271,8 +266,8 @@
                     if (res.data.code === 1) {
                         res.data.data.forEach(value => {
                             this.answers.push({
-                                title: value['title'],
-                                subtitle: value['content'],
+                                title: value['title'].replace(/<[^>]+>/g, ''),
+                                subtitle: value['content'].replace(/<[^>]+>/g, ''),
                                 time: this.get_date(value['edittime'])
                             })
                         })
@@ -282,8 +277,8 @@
                     if (res.data.code === 1) {
                         res.data.data.forEach(value => {
                             this.articles.push({
-                                title: value['title'],
-                                subtitle: value['description'],
+                                title: value['title'].replace(/<[^>]+>/g, ''),
+                                subtitle: value['description'].replace(/<[^>]+>/g, ''),
                                 time: this.get_date(value['edittime'])
                             })
                         })
@@ -303,7 +298,7 @@
                 } else if (time > 24 * 60 * 60 * 1000 && time < 10 * 60 * 60 * 1000) {
                     return Math.round(time / 24 / 60 / 60 / 1000) + '天前'
                 } else {
-                    return old.getMonth() + '-' + old.getDay()
+                    return (old.getMonth() + 1) + '-' + (old.getDate())
                 }
             },// 处理时间
             getUserGroup() {
@@ -336,20 +331,24 @@
                 this.$router.push({name: 'advisory', query: {id: this.userId}})
             },  // 付费咨询
             followUser() {
-                if (this.userInfo.isFollow) {
-                    this.$api.account.un_follow_user(this.userId).then(res => {
-                        if (res.data.code === 1) {
-                            this.userInfo.isFollow = false;
-                            this.$store.commit('showInfo', '已取消关注');
-                        }
-                    });
-                } else {
-                    this.$api.account.follow_user(this.userId).then(res => {
-                        if (res.data.code === 1) {
-                            this.userInfo.isFollow = true;
-                            this.$store.commit('showInfo', '已关注');
-                        }
-                    });
+                if (!this.self) {
+                    if (this.userInfo.isFollow) {
+                        this.$api.account.un_follow_user(this.userId).then(res => {
+                            if (res.data.code === 1) {
+                                this.userInfo.isFollow = false;
+                                this.$store.state.userInfo.follow--;
+                                this.$store.commit('showInfo', '已取消关注');
+                            }
+                        });
+                    } else {
+                        this.$api.account.follow_user(this.userId).then(res => {
+                            if (res.data.code === 1) {
+                                this.userInfo.isFollow = true;
+                                this.$store.state.userInfo.follow++;
+                                this.$store.commit('showInfo', '已关注');
+                            }
+                        });
+                    }
                 }
             }
         },

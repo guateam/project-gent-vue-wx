@@ -4,7 +4,7 @@
             <v-toolbar-side-icon @click="$store.commit('drawer')"></v-toolbar-side-icon>
 
             <v-toolbar-title class="headline" style="margin: 0 auto">
-                <span>历史纪录</span>
+                <span>浏览纪录</span>
             </v-toolbar-title>
 
             <v-btn icon>
@@ -30,7 +30,7 @@
                                     @click="toggle(item.targetID,n-1)"
                             >
                                 <v-list-tile-content>
-                                    <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+                                    <v-list-tile-title>{{ item.title}}</v-list-tile-title>
                                     <v-list-tile-sub-title class="text--primary">{{ item.headline }}
                                     </v-list-tile-sub-title>
                                     <v-list-tile-sub-title><span v-for="(tag, index) in item.tags" :key="index">{{ index===0 ? '' : '/' }}{{ tag.text }}</span>
@@ -76,12 +76,7 @@
                     {title: '提问'},
                     {title: '文章'},
                 ],
-                items: [
-                    {
-                        title: '',
-                        headline: ''
-                    }
-                ],
+                items: [],
                 busy: false,
             }
         },
@@ -114,7 +109,7 @@
                 } else if (time > 24 * 60 * 60 * 1000 && time < 10 * 60 * 60 * 1000) {
                     return Math.round(time / 24 / 60 / 60 / 1000) + '天前'
                 } else {
-                    return old.getMonth() + '-' + old.getDay()
+                    return (old.getMonth() + 1) + '-' + (old.getDate())
                 }
             },
             toggle(targetID, targetType) {
@@ -133,7 +128,7 @@
         },
         mounted() {
             this.get_history()
-        }
+        },
     }
 </script>
 

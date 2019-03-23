@@ -23,12 +23,13 @@
                     </div>
                     <div class="title_box_item" style="width: 100%;height: 25%;">
                         <h3>{{data.nickname}}</h3>
-                        <div style="margin-left: 5px;color:#66ccff; border: #66ccff 2px solid;padding: 1px 6px;">
+                        <div style="margin-left: 5px;color:#66ccff; border: #66ccff 2px solid;padding: 1px 6px">
                             {{data.group.text}} lv.{{data.level}}
                         </div>
                     </div>
                     <div class="title_box_item" style="width: 100%;height: 25%;padding: 0 !important;">
-                        <v-rating v-model="data.rate" half-increments style="padding: 0 !important;" readonly></v-rating>
+                        <v-rating v-model="data.rate" style="padding: 0 !important;" half-increments
+                                  readonly></v-rating>
                         <h3>{{data.rate}}分</h3>
                     </div>
                     <div class="title_box_item" style="width: 100%;height: 25%;">
@@ -79,11 +80,12 @@
         <v-divider></v-divider>
         <div style="padding: 1em;line-height: 1.5;">
             <h3 style="margin-bottom: 1.1em;font-size: 1.2em">作者简介</h3>
-            <v-layout row wrap @click="$router.push({name:'detail',query:{redirect: $route.fullPath, id:data.user_id}})">
+            <v-layout row wrap
+                      @click="$router.push({name:'detail',query:{redirect: $route.fullPath, id:data.user_id}})">
                 <v-flex xs3>
                     <div style="width: 65px;height: 65px;overflow:hidden;border-radius: 50%">
                         <img :src="data.head_portrait" alt="" style="width: 100%;
-height: 100%;border-radius: 50%;object-fit: cover">
+height: 100%;border-radius: 50%">
                     </div>
                 </v-flex>
                 <v-flex xs9>
@@ -137,7 +139,7 @@ height: 100%;border-radius: 50%">
                 </v-flex>
                 <v-flex xs2
                         style="align-items: center;justify-content: space-between;flex-direction: column;border-right: 1px solid #ccc"
-                        @click="$router.push({name:'comment',query:{id:$route.query.id,type:2}})"
+                        @click="$router.push({name:'comment',query:{id:$route.query.id,type:2,flag:data.free!==1 && paid===false}})"
                 >
                     <div>
                         <v-icon color="primary">comment</v-icon>
@@ -245,6 +247,10 @@ height: 100%;border-radius: 50%">
                 this.$api.article.pay_article(this.$route.query.id).then(res => {
                     if (res.data.code === 1 || res.data.code === 2) {
                         this.$router.push({name: 'article-read', query: {id: this.$route.query.id}})
+                    } else if (res.data.code === -2) {
+                        this.$store.commit('showInfo', '余额不足！');
+                    } else {
+                        this.$store.commit('showInfo', res.data.msg);
                     }
                 })
             },

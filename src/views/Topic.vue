@@ -75,6 +75,7 @@
                 page: 1,
                 busy: false,
                 timeout: 0,
+                category_done: false,
             }
         },
 
@@ -110,9 +111,7 @@
                         this.page++;
                         this.busy = false;
                         this.timeout = 0;
-                    } else if (res.data.code === 0) {
-                        this.$router.push({name: 'login'});
-                        // this.$store.commit('showInfo', '请先登录！');
+                        this.$store.commit('closeDialog');
                     } else {
                         if (this.timeout < 3) {
                             this.get_recommend();
@@ -120,7 +119,9 @@
                         } else {
                             // this.snackbar=true;
                             // this.text='连接超时，请检查网络'
-                            this.$store.commit('showInfo', '请先登录');
+                            this.$store.commit('closeDialog');
+                            this.$store.commit('showInfo', '连接超时，请检查网络');
+                            this.$router.push({name: 'login'})
                         }
                     }
                 })
@@ -134,6 +135,7 @@
                         that.$api.homepage.classify_all_tag(1).then(res => {
                             if (res.data.code === 1) {
                                 that.classify_question = res.data.data;
+                                that.category_done = true;
                             }
                         })
                     }
@@ -163,6 +165,7 @@
                     this.get_recommend();
                 } else {
                     //获取目前的分类页码数
+                    if (!this.category_done) return;
                     let cate_page = 0;
                     cate_page = this.category[this.tabs - 1]['page'] + 1;
                     this.get_classify_question(this.tabs - 1, cate_page)
@@ -176,7 +179,7 @@
             this.busy = false;
         },
         mounted() {
-            this.$store.commit('updateToken', this.$route.query.token);
+            this.$store.commit('showDialog');
             this.get_category();
             // setTimeout(this.get_recommend(), 5000);
         },

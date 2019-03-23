@@ -5,18 +5,31 @@
             <v-toolbar-side-icon @click="$store.commit('drawer')"></v-toolbar-side-icon>
 
             <v-toolbar-title class="headline" style="margin: 0 auto">
-                <span>消息通知</span>
+                <span>消息</span>
             </v-toolbar-title>
 
             <v-btn icon @click="$router.push({name:'search'})">
                 <v-icon>search</v-icon>
             </v-btn>
+
+            <v-tabs slot="extension" v-model="tabs" centered color="primary" slider-color="secondary">
+                <v-tab v-for="(tab, tab_idx) in tabList" :key="tab_idx">{{ tab }}</v-tab>
+            </v-tabs>
         </v-toolbar>
 
         <v-card>
             <v-tabs-items v-model="tabs">
+                <v-tab-item :key="0">
+                    <message-list :list="msgList"></message-list>
+                </v-tab-item>
+                <v-tab-item :key="1">
+                    <FriendList :list="friList"></FriendList>
+                </v-tab-item>
                 <v-tab-item :key="2">
                     <Notice :list1="noticeList1"></Notice>
+                </v-tab-item>
+                <v-tab-item :key="3">
+                    <GroupList :list="groupList"></GroupList>
                 </v-tab-item>
             </v-tabs-items>
         </v-card>
@@ -25,13 +38,19 @@
 </template>
 
 <script>
+    import MessageList from "../components/MessageList"
+    import FriendList from "../components/FriendList"
     import Notice from "../components/Notice"
+    import GroupList from "../components/GroupList"
 
     export default {
         name: 'Message',
 
         components: {
+            MessageList,
+            FriendList,
             Notice,
+            GroupList
         },
 
         data() {
@@ -40,15 +59,15 @@
                 tabList: ['私信', '好友', '通知', '群组'],
                 msgList: [
                     {
-                        title: '赖品钊<span id="title-time">18:17</span>',
-                        content: 'de order',
+                        title: '加载中...',
+                        content: '加载中...',
                         avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
                         userId: 3
                     },
                     {divider: true, inset: true},
                     {
-                        title: '袁宜照<span id="title-time">2018/12/15</span>',
-                        content: 'first cry!!!!!',
+                        title: '加载中...',
+                        content: '加载中...',
                         avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
                         userId: 2
                     }
@@ -56,12 +75,12 @@
                 friList: [
                     {
                         action: 'account_box',
-                        title: '系统管理员',
+                        title: '加载中',
                         items: [
                             {
-                                title: '谯盼旋',
+                                title: '加载中',
                                 avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
-                                content: '这是一个非常牛逼的签名'
+                                content: '加载中'
                             }
                         ]
                     },
@@ -71,19 +90,19 @@
                         active: true,
                         items: [
                             {
-                                title: '伦书文',
+                                title: '加载中',
                                 avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
-                                content: '这是一个非常牛逼的签名'
+                                content: '加载中'
                             },
                             {
-                                title: '隐云泽',
+                                title: '加载中',
                                 avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
-                                content: '这是一个非常牛逼的签名'
+                                content: '加载中'
                             },
                             {
-                                title: '蒲秀竹',
+                                title: '加载中',
                                 avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
-                                content: '这是一个非常牛逼的签名'
+                                content: '加载中'
                             }
                         ]
                     },
@@ -92,9 +111,9 @@
                         title: '分组三',
                         items: [
                             {
-                                title: '在阳舒',
+                                title: '加载中',
                                 avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-                                content: '这是一个非常牛逼的签名'
+                                content: '加载中'
                             },
                         ]
                     },
@@ -103,9 +122,9 @@
                         title: '分组四',
                         items: [
                             {
-                                title: '百河灵',
+                                title: '加载中',
                                 avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
-                                content: '这是一个非常牛逼的签名'
+                                content: '加载中'
                             },
                         ]
                     },
@@ -114,9 +133,9 @@
                         title: '分组五',
                         items: [
                             {
-                                title: '窦晨曦',
+                                title: '加载中',
                                 avatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg',
-                                content: '这是一个非常牛逼的签名'
+                                content: '加载中'
                             },
                         ]
                     },
@@ -125,9 +144,9 @@
                         title: '分组六',
                         items: [
                             {
-                                title: '塔平文',
+                                title: '加载中',
                                 avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
-                                content: '这是一个非常牛逼的签名'
+                                content: '加载中'
                             },
                         ]
                     },
@@ -136,9 +155,9 @@
                         title: '分组七',
                         items: [
                             {
-                                title: '勇志强',
+                                title: '加载中',
                                 avatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
-                                content: '这是一个非常牛逼的签名'
+                                content: '加载中'
                             },
                         ]
                     }
@@ -148,47 +167,47 @@
                         to: 'sys-notice',
                         icon: 'settings',
                         title: '系统消息',
-                        subtitle: "您有新的系统通知。"
+                        subtitle: "加载中"
                     },
                     {divider: true, inset: true},
                     {
                         to: 'approval',
                         icon: 'thumb_up',
                         title: '赞我的',
-                        subtitle: "赵一和王五赞了您的回答"
+                        subtitle: "加载中"
                     },
                     {divider: true, inset: true},
                     {
                         to: 'call',
                         icon: 'alarm',
                         title: '提到我的',
-                        subtitle: "用户123@了你"
+                        subtitle: "加载中"
                     },
                     {divider: true, inset: true},
                     {
                         to: 'reply',
                         icon: 'message',
                         title: '评论和回复',
-                        subtitle: "神奇的我等十人回复了你的评论"
+                        subtitle: "加载中"
                     },
                     {divider: true, inset: true},
-                    {
-                        icon: 'group',
-                        title: '群组',
-                        subtitle: "用户123邀请你加入清纯女大学生激情聊"
-                    }
+                    // {
+                    //     icon: 'group',
+                    //     title: '群组',
+                    //     subtitle: "用户123邀请你加入清纯女大学生激情聊"
+                    // }
                 ],
                 groupList: [
                     {
-                        title: '秃头猿之家<span id="title-time">18:17</span>',
-                        content: '尤雨溪：[图片]',
+                        title: '加载中',
+                        content: '加载中',
                         avatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
                         userId: 3
                     },
                     {divider: true, inset: true},
                     {
-                        title: '正经群聊<span id="title-time">2018/12/15</span>',
-                        content: '大漠孤烟：我觉得OK',
+                        title: '加载中',
+                        content: '加载中',
                         avatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
                         userId: 2
                     }
@@ -209,7 +228,7 @@
                             this.msgList.push({
                                 title: item.nickname + '<span id="title-time" class="time--text">' + item.post_time + '</span>',
                                 avatar: item.headportrait,
-                                content: item.content,
+                                content: item.content.match(/<[^>]+>/)?'[图片]':item.content,
                                 userID: item.user_id
                             });
                             // 添加分割线
@@ -265,7 +284,7 @@
                 } else if (time > 24 * 60 * 60 * 1000 && time < 10 * 60 * 60 * 1000) {
                     return Math.round(time / 24 / 60 / 60 / 1000) + '天前'
                 } else {
-                    return old.getMonth() + '-' + old.getDay()
+                    return (old.getMonth() + 1) + '-' + (old.getDate())
                 }
             },
             get_groups() {
@@ -275,9 +294,10 @@
                         res.data.data.forEach(value => {
                             data.push({
                                 title: value['name'] + '<span id="title-time">' + this.get_date(value['last_message']['time']) + '</span>',
-                                content: value['last_message']['nickname'] + ':' + value['last_message']['content'],
+                                content: value['last_message']['nickname'] + ':' + (value['last_message']['content'].match(/<[^>]+>/)?'[图片]':value['last_message']['content']),
                                 avatar: value['head_portrait'],
-                                id: value['id']
+                                id: value['id'],
+                                name: value['name'],
                             });
                             data.push({
                                 divider: true, inset: true
