@@ -24,7 +24,7 @@
                         <v-layout align-center justify-space-between row fill-height>
                             <!--头像-->
                             <v-flex xs6>
-                                <img class="avatar" :src="userInfo.avatar" width="66%">
+                                <img class="avatar" :src="userInfo.avatar" style="width: 110px;height: 110px;border-radius: 50%;object-fit: cover">
                             </v-flex>
 
                             <v-flex xs6>

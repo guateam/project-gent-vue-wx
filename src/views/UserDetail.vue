@@ -35,6 +35,11 @@
             </div>
             <v-divider></v-divider>
             <div class="box">
+                <div>手机号</div>
+                <div>暂未绑定</div>
+            </div>
+            <v-divider></v-divider>
+            <div class="box">
                 <div>邮箱</div>
                 <div>{{email}}</div>
             </div>

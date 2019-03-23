@@ -28,7 +28,7 @@
                         </div>
                     </div>
                     <div class="title_box_item" style="width: 100%;height: 25%;padding: 0 !important;">
-                        <v-rating v-model="data.rate" style="padding: 0 !important;" readonly></v-rating>
+                        <v-rating v-model="data.rate" half-increments style="padding: 0 !important;" readonly></v-rating>
                         <h3>{{data.rate}}分</h3>
                     </div>
                     <div class="title_box_item" style="width: 100%;height: 25%;">
@@ -83,7 +83,7 @@
                 <v-flex xs3>
                     <div style="width: 65px;height: 65px;overflow:hidden;border-radius: 50%">
                         <img :src="data.head_portrait" alt="" style="width: 100%;
-height: 100%;border-radius: 50%">
+height: 100%;border-radius: 50%;object-fit: cover">
                     </div>
                 </v-flex>
                 <v-flex xs9>

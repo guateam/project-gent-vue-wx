@@ -365,6 +365,20 @@ export default new Router({
             path: '/first-login',
             name: 'first-login',
             component: () => import('./views/FirstLogin.vue')
-        }
+        },
+        // 提现
+        {
+            path: 'check-out',
+            name: 'check-out',
+            meta: {requireLogin: true},
+            component: () => import('./views/CheckOut.vue')
+        },
+        // 充值
+        {
+            path: 'recharge',
+            name: 'recharge',
+            meta: {requireLogin: true},
+            component: () => import('./views/Recharge.vue')
+        },
     ],
 });

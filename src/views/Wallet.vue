@@ -203,11 +203,13 @@
       },  // 显示更多卡券
 
       withdraw() {
-        this.$store.commit('showInfo', '立即提现');
+        // this.$store.commit('showInfo', '立即提现');
+        this.$router.push({name: 'check-out'})
       },  // 提现
 
       topUp() {
-        this.$store.commit('showInfo', '立即充值');
+        // this.$store.commit('showInfo', '立即充值');
+        this.$router.push({name: 'recharge'})
       },  // 充值
 
       getBalance() {
