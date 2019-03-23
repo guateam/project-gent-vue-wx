@@ -33,7 +33,8 @@
                                     <v-list-tile-title>{{ item.title }}</v-list-tile-title>
                                     <v-list-tile-sub-title class="text--primary">{{ item.headline }}
                                     </v-list-tile-sub-title>
-                                    <v-list-tile-sub-title><span v-for="(tag, index) in item.tags" :key="index">{{ index===0 ? '' : '/' }}{{ tag.text }}</span></v-list-tile-sub-title>
+                                    <v-list-tile-sub-title><span v-for="(tag, index) in item.tags" :key="index">{{ index===0 ? '' : '/' }}{{ tag.text }}</span>
+                                    </v-list-tile-sub-title>
                                 </v-list-tile-content>
 
                                 <v-list-tile-action>
@@ -47,6 +48,14 @@
                                     style="margin-bottom: 0.5em;margin-top: 0.5em"
                             ></v-divider>
                         </template>
+                        <div v-if="busy" class="load-more-normal">
+                            <h3>
+                                <v-progress-circular
+                                        indeterminate
+                                        color="primary"
+                                ></v-progress-circular>
+                                <span style="margin-left: 1em">加载中</span></h3>
+                        </div>
                     </v-list>
 
                 </v-tab-item>
@@ -69,17 +78,26 @@
                 ],
                 items: [
                     {
-                        title:'',
-                        headline:''
+                        title: '',
+                        headline: ''
                     }
-                ]
+                ],
+                busy: false,
             }
         },
         methods: {
             get_history() {
+                this.busy = true;
                 this.$api.account.get_history().then(res => {
                     if (res.data.code === 1) {
+                        res.data.data.forEach(data => {
+                            data.forEach(value => {
+                                value['title'] = value['title'].replace(/<[^>]+>/g, '')
+                                // value['headline'] = value['headline'].replace(/<[^>]+>/g, '')
+                            })
+                        });
                         this.items = res.data.data;
+                        this.busy = false;
                     }
                 })
             },
@@ -99,16 +117,16 @@
                     return old.getMonth() + '-' + old.getDay()
                 }
             },
-            toggle(targetID,targetType){
+            toggle(targetID, targetType) {
                 switch (targetType) {
                     case 0:
-                        this.$router.push({name:'answer',query:{id:targetID}});
+                        this.$router.push({name: 'answer', query: {id: targetID}});
                         break;
                     case 1:
-                        this.$router.push({name:'question',query:{id:targetID}});
+                        this.$router.push({name: 'question', query: {id: targetID}});
                         break;
                     case 2:
-                        this.$router.push({name:'article',query:{id:targetID}});
+                        this.$router.push({name: 'article', query: {id: targetID}});
                         break;
                 }
             }
@@ -120,5 +138,9 @@
 </script>
 
 <style scoped>
-
+    .load-more-normal {
+        text-align: center;
+        height: 60px;
+        line-height: 60px;
+    }
 </style>

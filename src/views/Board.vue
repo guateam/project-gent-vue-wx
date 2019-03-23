@@ -218,6 +218,7 @@
                             this.demands = [];
                         }
                         res.data.data.forEach(value => {
+                            value['content'] = value['content'].replace(/<[^>]+>/g, '');
                             this.demands.push(value)
                         });
                         this.page++;

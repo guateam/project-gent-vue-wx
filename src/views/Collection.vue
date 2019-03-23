@@ -33,7 +33,8 @@
                                     <v-list-tile-title>{{ item.title }}</v-list-tile-title>
                                     <v-list-tile-sub-title class="text--primary">{{ item.headline }}
                                     </v-list-tile-sub-title>
-                                    <v-list-tile-sub-title>{{ item.subtitle.replace(/<[^>]+>/g,"") }}</v-list-tile-sub-title>
+                                    <v-list-tile-sub-title>{{ item.subtitle }}
+                                    </v-list-tile-sub-title>
                                 </v-list-tile-content>
 
                                 <v-list-tile-action>
@@ -88,6 +89,13 @@
             getCollections() {
                 this.$api.account.get_collections().then(res => {
                     if (res.data.code === 1) {
+                        res.data.data.forEach(data => {
+                            data.forEach(value => {
+                                value['title'] = value['title'].replace(/<[^>]+>/g, '');
+                                value['subtitle'] = value['subtitle'].replace(/<[^>]+>/g, '');
+                                value['headline'] = value['headline'].replace(/<[^>]+>/g, '');
+                            })
+                        });
                         this.items = res.data.data;
                     }
                 });

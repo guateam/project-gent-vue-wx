@@ -16,6 +16,7 @@
         };
 
         plusReady(function () {
+            plus.navigator.setStatusBarBackground('#ffcc00');
             var firstBack = 0;
             var handleBack = function () {
                 var currentWebview = plus.webview.currentWebview();
@@ -42,7 +43,7 @@
                             } else if (now() - firstBack < 2000) {
                                 plus.runtime.quit();
                             }
-                        }else if(window.location.href.search(/#\/first-login$/) !== -1){
+                        } else if (window.location.href.search(/#\/first-login$/) !== -1) {
                             plus.nativeUI.toast('没有上一页了！');
                         } else {
                             history.back();
