@@ -44,7 +44,9 @@
                 <div @click="bind_email_model = true">{{email}}</div>
             </div>
             <v-divider></v-divider>
-            <div class="box" @click="$router.push({name:'verified',query:{state:$store.state.userInfo.state === 2}})">
+            <!--删掉实名认证-->
+            <!--@click="$router.push({name:'verified',query:{state:$store.state.userInfo.state === 2}})"-->
+            <div class="box">
                 <div>实名认证</div>
                 <div>{{verify}}</div>
             </div>
