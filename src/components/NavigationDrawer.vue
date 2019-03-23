@@ -181,16 +181,16 @@
                     </v-list-tile-title>
                 </v-list-tile>
             </v-list>
-            <v-divider></v-divider>
+            <!--<v-divider></v-divider>-->
 
-            <v-list>
-                <v-list-tile :to="{name: 'settings', query: {redirect: this.$route.fullPath}}" @click="drawer = false">
-                    <v-list-tile-action>
-                        <v-icon>settings</v-icon>
-                    </v-list-tile-action>
-                    <v-list-tile-title>设置</v-list-tile-title>
-                </v-list-tile>
-            </v-list>
+            <!--<v-list>-->
+                <!--<v-list-tile :to="{name: 'settings', query: {redirect: this.$route.fullPath}}" @click="drawer = false">-->
+                    <!--<v-list-tile-action>-->
+                        <!--<v-icon>settings</v-icon>-->
+                    <!--</v-list-tile-action>-->
+                    <!--<v-list-tile-title>设置</v-list-tile-title>-->
+                <!--</v-list-tile>-->
+            <!--</v-list>-->
         </div><!--功能列表-->
     </div>
 </template>

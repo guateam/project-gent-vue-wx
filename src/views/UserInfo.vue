@@ -7,9 +7,9 @@
                 <span>{{ title }}</span>
             </v-toolbar-title>
 
-            <v-btn :to="{name: 'settings', query: {redirect: this.$route.fullPath}}" icon>
-                <v-icon>settings</v-icon>
-            </v-btn>
+            <!--<v-btn :to="{name: 'settings', query: {redirect: this.$route.fullPath}}" icon>-->
+                <!--<v-icon>settings</v-icon>-->
+            <!--</v-btn>-->
         </v-toolbar>
         <v-card color="primary" flat>
             <v-container>
