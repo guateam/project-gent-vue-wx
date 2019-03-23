@@ -216,9 +216,16 @@
 
         },
         created() {
-            this.DB();
+            // this.DB();
             // setTimeout(this.get_user(), 1100);
             // 添加返回事件监听
+            if(this.$route.query.token!==''){
+                this.$store.commit('updateToken', this.$route.query.token);
+                // this.DB();
+                setTimeout(this.get_user(), 1100);
+                // 添加返回事件监听
+            }else{
+            }
         },
     }
 </script>
