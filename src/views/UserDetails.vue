@@ -76,7 +76,9 @@
                     <v-container fill-height>
                         <v-layout align-center justify-center row fill-height>
                             <v-flex xs5>
-                                <v-btn @click="consult" block color="grey"
+                                <!--删掉咨询入口-->
+                                <!--@click="consult"-->
+                                <v-btn block color="grey"
                                        :disabled='user_group==1||self'>
                 <span class="font-weight-bold white--text">
                   咨询
